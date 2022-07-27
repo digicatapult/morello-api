@@ -4,8 +4,10 @@ import {
   Path,
   Route,
 } from "tsoa";
+import { exec } from 'child_process';
 
 import Logger from '../../utils/Logger'
+
 
 let log = Logger.child({ controller: '/scenario' });
 
@@ -16,10 +18,19 @@ export class scenario extends Controller {
   public get(@Path() id: string): Promise<Scenario> {
     log.info(`executing ${id} scenario`);
 
-    return Promise.resolve({
-      status: 'error',
-      output: 'some error',
-    });
+    return new Promise((resolve, reject) => {
+      exec("ls -la", (error, stdout, stderr) => {
+        if (error) reject({
+          status: 'error',
+          output: error,
+        })
+
+        resolve({
+          status: stderr ? 'error': 'success',
+          output: stderr ? stderr : stdout,
+        });
+      })
+    })
   }
 }
 
