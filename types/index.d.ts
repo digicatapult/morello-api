@@ -1,6 +1,5 @@
-import { Example, ExampleRequestParams } from './models/example'
+import type { Scenario } from './models/run'
 
-export {
-  Example,
-  ExampleRequestParams,
+export type {
+  Scenario,
 }
