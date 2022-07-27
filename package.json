@@ -1,7 +1,7 @@
 {
-  "name": "ts-nodejs-template",
-  "version": "0.0.0",
-  "description": "A typescript service template for API services using nodejs/express",
+  "name": "@digicatapult/morello-api",
+  "version": "0.0.1",
+  "description": "An interface for executing binaries on it's self and morello host.",
   "main": "src/index.ts",
   "scripts": {
     "build": "tsoa spec-and-routes && tsc",
@@ -9,8 +9,23 @@
     "dev": "tsoa spec-and-routes && concurrently \"npx tsc --watch\" \"nodemon -q build/index.js\"",
     "test": "./node_modules/.bin/jest --verbose /"
   },
-  "author": "n3op2",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/digicatapult/morello-api.git"
+  },
+  "engines": {
+    "node": "16.x.x",
+    "npm": "8.x.x"
+  },
+  "keywords": [
+    "OpenAPI"
+  ],
+  "author": "Digital Catapult",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/digicatapult/morello-api/issues"
+  },
+  "homepage": "https://github.com/digicatapult/morello-api#readme",
   "devDependencies": {
     "@types/config": "^0.0.41",
     "@types/express": "^4.17.13",
