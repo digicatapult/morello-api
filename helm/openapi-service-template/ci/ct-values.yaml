@@ -1,0 +1,4 @@
+image:
+  repository: 'openapi-service-template'
+  tag: 'latest'
+  PullPolicy: Never
