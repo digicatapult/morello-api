@@ -21,7 +21,7 @@ app.use(json());
 RegisterRoutes(app);
 app.use(['/openapi', '/docs', '/swagger'], swaggerUI.serve, swaggerUI.setup(swaggerJson));
 
-app.get('/test', (req: Request, res: Response) => {
+app.get('/scenario', (req: Request, res: Response) => {
   log = log.child({ child: 'child-example-2'})
   log.info(req.headers);
   res.send('TypeScript nodejs template');
