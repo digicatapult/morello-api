@@ -1,4 +1,0 @@
-image:
-  repository: 'morello-api'
-  tag: 'latest'
-  PullPolicy: Never

@@ -2,11 +2,8 @@
   "log": {
     "level": "info"
   },
+  "morello_host": "0.0.0.0",
   "app": {
     "port": 3000
-  },
-  "db": {
-    "username": "paulius",
-    "password": "passwoord-paul"
   }
 }
