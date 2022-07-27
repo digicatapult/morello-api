@@ -1,14 +1,10 @@
 import config from 'config';
 import { urlencoded, json} from 'body-parser';
-import express, {
-  Express,
-  Request,
-  Response
-} from 'express';
+import * as swaggerUI from 'swagger-ui-express';
+import express, { Express } from 'express';
 
 import { RegisterRoutes } from './routes';
 import * as swaggerJson from './swagger.json';
-import * as swaggerUI from 'swagger-ui-express';
 
 import logger from './utils/Logger'
 

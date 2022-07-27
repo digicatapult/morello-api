@@ -6,7 +6,6 @@ import {
 } from "tsoa";
 
 import Logger from '../../utils/Logger'
-import { Scenario } from "../../../types"
 
 let log = Logger.child({ controller: '/scenario' });
 
