@@ -5,28 +5,56 @@
 		"parameters": {},
 		"requestBodies": {},
 		"responses": {},
-		"schemas": {},
+		"schemas": {
+			"Scenario": {
+				"properties": {
+					"status": {
+						"type": "string",
+						"enum": [
+							"success",
+							"error"
+						]
+					},
+					"output": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"status",
+					"output"
+				],
+				"type": "object",
+				"additionalProperties": false
+			}
+		},
 		"securitySchemes": {}
 	},
 	"info": {
-		"title": "ts-nodejs-template",
-		"version": "0.0.0",
-		"description": "A typescript service template for API services using nodejs/express",
+		"title": "@digicatapult/morello-api",
+		"version": "0.0.1",
+		"description": "An interface for executing binaries on it's self and morello host.",
 		"license": {
-			"name": "ISC"
+			"name": "Apache-2.0"
 		},
 		"contact": {
-			"name": "n3op2"
+			"name": "Digital Catapult"
 		}
 	},
 	"openapi": "3.0.0",
 	"paths": {
-		"/run/{id}": {
+		"/scenario/{id}": {
 			"get": {
 				"operationId": "Get",
 				"responses": {
-					"204": {
-						"description": "No content"
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Scenario"
+								}
+							}
+						}
 					}
 				},
 				"security": [],

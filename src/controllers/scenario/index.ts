@@ -5,6 +5,7 @@ import {
   Route,
 } from "tsoa";
 import { exec } from 'child_process';
+import { Scenario } from '../../../types'
 
 import Logger from '../../utils/Logger'
 
