@@ -1,0 +1,7 @@
+config:
+  port: 80
+image:
+  repository: ghcr.io/digicatapult/morello-api
+  pullPolicy: IfNotPresent
+  tag: 'v0.0.1'
+  pullSecrets: ['ghcr-digicatapult']
