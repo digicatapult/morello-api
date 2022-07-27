@@ -1,0 +1,141 @@
+{
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"Example": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"items": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"status": {
+						"type": "string",
+						"enum": [
+							"online",
+							"offline"
+						]
+					}
+				},
+				"required": [
+					"id",
+					"items",
+					"status"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Pick_Example.items-or-status_": {
+				"properties": {
+					"items": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"status": {
+						"type": "string",
+						"enum": [
+							"online",
+							"offline"
+						]
+					}
+				},
+				"required": [
+					"items",
+					"status"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"ExampleRequestParams": {
+				"$ref": "#/components/schemas/Pick_Example.items-or-status_"
+			}
+		},
+		"securitySchemes": {}
+	},
+	"info": {
+		"title": "ts-nodejs-template",
+		"version": "0.0.0",
+		"description": "A typescript service template for API services using nodejs/express",
+		"license": {
+			"name": "ISC"
+		},
+		"contact": {
+			"name": "n3op2"
+		}
+	},
+	"openapi": "3.0.0",
+	"paths": {
+		"/example/{id}": {
+			"get": {
+				"operationId": "Get",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Example"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/example": {
+			"post": {
+				"operationId": "Create",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "boolean"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ExampleRequestParams"
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	]
+}
