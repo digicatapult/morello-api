@@ -1,8 +1,8 @@
 apiVersion: v2
-name: openapi-service-template
-appVersion: '0.0.2'
-description: A Helm chart for openapi-service-template
-version: '0.0.2'
+name: morello-api
+appVersion: '0.0.1'
+description: A Helm chart for morello-api
+version: '0.0.1'
 type: application
 maintainers:
   - name: digicatapult
