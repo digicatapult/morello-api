@@ -10,7 +10,7 @@ import { Scenario } from "../../../types"
 
 let log = Logger.child({ controller: '/run' })
 
-@Route('example')
+@Route('run')
 export class Run extends Controller {
 
   @Get('{id}')
