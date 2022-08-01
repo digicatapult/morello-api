@@ -6,8 +6,8 @@
   "scripts": {
     "build": "tsoa spec-and-routes && tsc",
     "start": "node build/index.js",
-    "depcheck": "depcheck",
-    "dev": "tsoa spec-and-routes && concurrently \"npx tsc --watch\" \"nodemon -q build/index.js\"",
+    "depcheck": "depcheck --ignores='concurrently,nodemon'",
+    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q build/index.js\"",
     "test:unit": "./node_modules/.bin/jest --verbose ./src",
     "test:integration": "./node_modules/.bin/jest --verbose ./integration"
   },
