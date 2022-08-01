@@ -6,7 +6,7 @@ import pino, { Logger } from "pino"
 // unit tests
 // assign logger to req.log?
 const logger: Logger = pino({
-  name: "ts-nodejs-template", // TODO should pull name and version from package.json
+  name: 'morello-api',
   timestamp: true,
 }, process.stdout)
 
