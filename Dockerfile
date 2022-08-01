@@ -1,6 +1,5 @@
-
 # syntax=docker/dockerfile:1.0.0-experimental
-FROM node:16-alpine
+FROM node:16-alpine as builder
 
 WORKDIR /morello-api
 
@@ -25,7 +24,7 @@ FROM node:16-alpine
 
 WORKDIR /morello-api
 RUN npm install --production
-COPY --from=0 /morello-api/build .
+COPY --from=builder /morello-api/build .
 
 EXPOSE 80
 CMD [ "node", "./build/index.js" ]
