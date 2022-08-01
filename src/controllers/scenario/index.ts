@@ -20,23 +20,19 @@ export class scenario extends Controller {
       self: await new Promise((resolve) => {
         log.info(`executing ${id} scenario on this host`);
 
-        exec("ls -la", (error, stdout, stderr) => {
-          resolve({
-            status: (error || stderr || error) ? 'error': 'success',
-            output: error ? error.message : stderr ? stderr : stdout,
-          });
-        });
+        exec('ls', (error, stdout, stderr) => resolve({
+          status: (error || stderr) ? 'error': 'success',
+          output: error ? error : stderr ? stderr : stdout,
+        }))
       }),
       morello: await new Promise((resolve) => {
         log.info(`executing ${id} scenario on morello host`);
 
-        exec(`ssh ${address} ls`, (error, stdout, stderr) => {
-          resolve({
-            status: (error || stderr || error) ? 'error': 'success',
-            output: error ? error.message : stderr ? stderr : stdout,
-          });
-        })
-      })
+        exec(`ssh ${address} ls`, (error, stdout, stderr) => resolve({
+          status: (error || stderr) ? 'error': 'success',
+          output: error ? error : stderr ? stderr : stdout,
+        }));
+      }),
     })
   }
 }

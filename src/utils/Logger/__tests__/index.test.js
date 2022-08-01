@@ -1,3 +1,4 @@
+const { expect } = require('chai')
 const Logger = require('../../Logger').default
 
 describe('Logger', () => {
@@ -8,11 +9,9 @@ describe('Logger', () => {
   })
 
   it('creates an instance of logger and returns log object', () => {
-    expect(log.bindings()).toEqual(
-      expect.objectContaining({
-        name: 'morello-api',
-        test: true,
-      })
-    )
+    expect(log.bindings()).to.deep.equal({
+      name: 'morello-api',
+      test: true,
+    })
   })
 })
