@@ -2,9 +2,9 @@
   "log": {
     "level": "debug"
   },
-  "morello_host": {
+  "morello": {
     "address": "127.0.0.1",
-    "username": "dc-morello"
+    "username": "root"
   },
   "app": {
     "port": 3000

@@ -9,9 +9,8 @@ import { exec } from 'child_process'
 import { ExamplesResult } from '../../../types'
 import Logger from '../../utils/Logger'
 
-let log = Logger.child({ controller: '/scenario', morello_host: config.get('morello_host') });
-
-const { address, username } = config.get('morello_host')
+let log = Logger.child({ controller: '/scenario', ...config.get('morello') });
+const { address, username } = config.get('morello')
 
 @Route('scenario')
 export class scenario extends Controller {
