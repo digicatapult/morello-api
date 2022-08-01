@@ -7,7 +7,8 @@
     "build": "tsoa spec-and-routes && tsc",
     "start": "node build/index.js",
     "dev": "tsoa spec-and-routes && concurrently \"npx tsc --watch\" \"nodemon -q build/index.js\"",
-    "test": "./node_modules/.bin/jest --verbose /"
+    "test:unit": "./node_modules/.bin/jest --verbose ./src",
+    "test:integration": "./node_modules/.bin/jest --verbose ./integration"
   },
   "repository": {
     "type": "git",
