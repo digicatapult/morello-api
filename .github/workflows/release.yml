@@ -29,6 +29,27 @@ jobs:
           echo "::set-output name=REPO_NAME::$REPO_NAME"
           echo "::set-output name=ORG_NAME::$ORG_NAME"
 
+  lint:
+    name: Run lint
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: actions/setup-node@master
+      with:
+        node-version: 16.x
+    - name: Cache Node.js modules
+      uses: actions/cache@v1
+      with:
+        path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+        key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.OS }}-node-
+          ${{ runner.OS }}-
+    - name: Install Packages
+      run: npm ci
+    - name: Lint
+      run: npm run lint
+
   dependency-check:
     name: Run dependency check
     runs-on: ubuntu-latest
@@ -50,27 +71,6 @@ jobs:
         run: npm ci
       - name: Dependency Check
         run: npm run depcheck
-
-  lint:
-    name: Run lint
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@master
-    - uses: actions/setup-node@master
-      with:
-        node-version: 16.x
-    - name: Cache Node.js modules
-      uses: actions/cache@v1
-      with:
-        path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
-        key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.OS }}-node-
-          ${{ runner.OS }}-
-    - name: Install Packages
-      run: npm ci
-    - name: Lint
-      run: npm run lint
 
   tests:
     name: Run tests
@@ -99,9 +99,8 @@ jobs:
          time: '30s'
       - name: Run unit tests
         run: npm run test:unit
-      # TODO wait until docker image is ready for integration tests
-      #- name: Run integration tests 
-      #  run: npm run test:integration
+      - name: Run integration tests 
+        run: npm run test:integration
 
   check-version:
     name: 'Check version'
