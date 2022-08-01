@@ -1,6 +1,9 @@
 {
+  "log": {
+    "level": "warn"
+  },
   "morello_host": {
-    "address": "to-be-updaated->-docker?",
+    "address": "100.100.100.100",
     "username": "username"
   }
 }

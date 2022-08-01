@@ -1,5 +1,9 @@
 {
+  "log": {
+    "level": "info"
+  },
   "morello_host": {
-    "address": "MORELLO_HOST"
+    "address": "MORELLO_HOST",
+    "username": "MORELLO_USERNAME"
   }
 }
