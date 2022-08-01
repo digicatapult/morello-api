@@ -2,7 +2,10 @@
   "log": {
     "level": "info"
   },
-  "morello_host": "0.0.0.0",
+  "morello_host": {
+    "addres": "0.0.0.0",
+    "username": "dc-morello"
+  },
   "app": {
     "port": 3000
   }
