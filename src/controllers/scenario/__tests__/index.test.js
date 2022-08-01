@@ -23,7 +23,7 @@ describe('/scenario controller', () => {
     jest.clearAllMocks()
   })
   // This is a placeholdesr and will be updated shortly
-  describe.only('if uploading binary file on the morello host fails', () => {
+  describe('if uploading binary file on the morello host fails', () => {
     it('does not attempt to execute any binaries', async () => {
       child.exec = jest.fn((_, cb) => {
         cb('testing')
