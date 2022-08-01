@@ -15,8 +15,11 @@ const execute = async () => {
 describe('/scenario controller', () => {
   let res
 
-  beforeEach(() => {
-    jest.resetAllMocks()
+  beforeEach(async () => {
+    child.exec = jest.fn((_, cb) => {
+      cb(null, { stdout: 'ok' })
+    })
+    res = await execute()
   })
 
   afterEach(() => {
@@ -25,11 +28,21 @@ describe('/scenario controller', () => {
 
   describe('if executing binaries fails', () => {
     it('returns the correct state along with stderr', () => {
-      expect(1).toBe(1) // tmp
     })
   })
 
   it('exectures commands and returns formmated output', () => {
-    expect(1).toBe(1) // tmp
+    expect(res).toEqual(expect.objectContaining({
+      morello: expect.objectContaining({
+        output: {
+          stdout: "ok"
+        },
+      }),
+      self: expect.objectContaining({
+        output: {
+          stdout: "ok"
+        }
+      })
+    }))
   })
 })

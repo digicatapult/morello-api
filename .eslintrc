@@ -17,7 +17,7 @@
     {
       "files": ["**/*.test.js"],
       "rules": {
-        "prettier/prettier": "off"
+        "prettier/prettier": "error"
       },
       "env": {
         "mocha": false,
