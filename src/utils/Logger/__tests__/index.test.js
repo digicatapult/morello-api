@@ -1,14 +1,15 @@
 const Logger = require('../../Logger')
 
 describe('Logger', () => {
-  let logger;
+  let logger
+
   beforeEach(() => {
     logger = new Logger()
   })
 
   it('creates an iinstance of logger and returns log object', () => {
     expect(logger).objectContaining({
-      nane: 'morello-api'
+      nane: 'morello-api',
     })
   })
 })

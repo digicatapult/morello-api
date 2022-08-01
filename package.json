@@ -4,6 +4,7 @@
   "description": "An interface for executing binaries on it's self and morello host.",
   "main": "src/index.ts",
   "scripts": {
+    "lint": "eslint ./src",
     "build": "tsoa spec-and-routes && tsc",
     "start": "node build/index.js",
     "depcheck": "depcheck --ignores='concurrently,nodemon'",
