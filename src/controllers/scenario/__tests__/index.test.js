@@ -22,34 +22,6 @@ describe('/scenario controller', () => {
   afterEach(() => {
     jest.clearAllMocks()
   })
-  // This is a placeholdesr and will be updated shortly
-  describe('if uploading binary file on the morello host fails', () => {
-    it('does not attempt to execute any binaries', async () => {
-      child.exec = jest.fn((_, cb) => {
-        cb('testing')
-      })
-      res = await execute()
-
-      expect(child.exec).toHaveBeenCalledTimes(1)
-    })
-
-    it('returns report containing error message', async () => {
-      child.exec = jest.fn((_, cb) => cb(null, { stdout: 'ok' }))
-      res = await execute()
-      expect(res).toEqual(expect.objectContaining({
-        morello: expect.objectContaining({
-          output: {
-            stdout: "ok"
-          },
-        }),
-        self: expect.objectContaining({
-          output: {
-            stdout: "ok"
-          }
-        })
-      }))
-    })
-  })
 
   describe('if executing binaries fails', () => {
     it('returns the correct state along with stderr', () => {
