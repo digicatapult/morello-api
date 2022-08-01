@@ -33,7 +33,7 @@ COPY tsconfig.json ./
 COPY src /morello-api/src
 COPY types /morello-api/types
 
-RUN npm install
+RUN npm install --production
 RUN npm run build
 
 EXPOSE 80
