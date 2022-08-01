@@ -43,7 +43,7 @@ export class scenario extends Controller {
       morello: await new Promise((resolve) => {
         log.info(`executing ${id} scenario on morello host`);
 
-        exec(`ssh ${address}`, (error, stdout, stderr) => {
+        exec(`ssh ${address} ls`, (error, stdout, stderr) => {
           resolve({
             status: (error || stderr || error) ? 'error': 'success',
             output: error ? error.message : stderr ? stderr : stdout,

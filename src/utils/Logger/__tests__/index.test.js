@@ -7,7 +7,7 @@ describe('Logger', () => {
     log = Logger.child({ test: true })
   })
 
-  it('creates an iinstance of logger and returns log object', () => {
+  it('creates an instance of logger and returns log object', () => {
     expect(log.bindings()).toEqual(
       expect.objectContaining({
         name: 'morello-api',

@@ -64,7 +64,6 @@ jobs:
     - name: Lint
       run: npm run lint
 
-
   tests:
     name: Run tests
     runs-on: ubuntu-latest

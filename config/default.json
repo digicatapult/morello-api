@@ -3,7 +3,7 @@
     "level": "info"
   },
   "morello_host": {
-    "addres": "...",
+    "address": "127.0.0.1",
     "username": "dc-morello"
   },
   "app": {

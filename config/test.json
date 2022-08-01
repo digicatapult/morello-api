@@ -1,7 +1,6 @@
 {
   "morello_host": {
-    "address": {
-      "address": "to-be-updaated->-docker?"
-    }
+    "address": "to-be-updaated->-docker?",
+    "username": "username"
   }
 }
