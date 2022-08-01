@@ -15,13 +15,13 @@
   },
   "overrides": [
     {
-      "files": ["./src/**/*.test.js"],
+      "files": ["**/*.test.js"],
       "rules": {
-        "prettier/prettier": "error"
+        "prettier/prettier": "off"
       },
       "env": {
         "mocha": false,
-        "jest": true
+        "jest": true,
       }
     }
   ]

@@ -4,10 +4,10 @@ import {
   Path,
   Route,
 } from "tsoa";
-import config from 'config';
-import { exec } from 'child_process';
+import config from 'config'
+import { exec } from 'child_process'
 // import { Scenario } from '../../../types'
-import Logger from '../../utils/Logger';
+import Logger from '../../utils/Logger'
 
 let log = Logger.child({ controller: '/scenario', morello_host: config.get('morello_host') });
 
@@ -43,7 +43,7 @@ export class scenario extends Controller {
           resolve({
             status: (error || stderr || error) ? 'error': 'success',
             output: error ? error.message : stderr ? stderr : stdout,
-          });
+          })
         })
       })
     })
