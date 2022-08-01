@@ -12,6 +12,7 @@ describe('Logger', () => {
       expect.objectContaining({
         name: 'morello-api',
         test: true,
-    }))
+      })
+    )
   })
 })
