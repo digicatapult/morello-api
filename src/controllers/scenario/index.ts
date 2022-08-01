@@ -10,16 +10,16 @@ import { exec } from 'child_process'
 import Logger from '../../utils/Logger'
 
 let log = Logger.child({ controller: '/scenario', morello_host: config.get('morello_host') });
-const { address, user } = config.get('morello_host')
+const { address, username } = config.get('morello_host')
 
 @Route('scenario')
 export class scenario extends Controller {
   @Get('{id}')
   public async get(@Path() id: string): Promise<any> {
-    log.info(`copying ${id} scenario onto morello host ${config.get('morello_host.address')}`)
+    log.info(`copying ${id} scenario onto morello host ${address}`)
 
     await new Promise((resolve) => {
-      exec(`scp ../../../examples/tmp.bin ${user}@${address}:/home/`, (error, stdout, stderr) => {
+      exec(`scp ../../../examples/tmp.bin ${username}@${address}:/home/`, (error, stdout, stderr) => {
         if (error || stderr) {
           log.error({ error, stderr })
           throw new Error(`copying ${id} binaries has failed.`)
