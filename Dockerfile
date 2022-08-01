@@ -14,15 +14,16 @@ RUN npm -g install npm@8.x.x
 
 COPY package*.json ./
 COPY tsconfig.json ./
-COPY src /morello-api/src
-COPY types /morello-api/types
 
 RUN npm install
+COPY . .
 RUN npm run build
 
-FROM node:16-alpine
+# Service
+FROM node:16-alpine as service
 
 WORKDIR /morello-api
+COPY package*.json ./
 RUN npm install --production
 COPY --from=builder /morello-api/build .
 
