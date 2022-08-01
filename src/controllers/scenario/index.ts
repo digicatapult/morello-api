@@ -6,7 +6,7 @@ import {
 } from "tsoa";
 import config from 'config'
 import { exec } from 'child_process'
-// import { Scenario } from '../../../types'
+import { ExamplesResult } from '../../../types'
 import Logger from '../../utils/Logger'
 
 let log = Logger.child({ controller: '/scenario', morello_host: config.get('morello_host') });
@@ -16,7 +16,7 @@ const { address, username } = config.get('morello_host')
 @Route('scenario')
 export class scenario extends Controller {
   @Get('{id}')
-  public async get(@Path() id: string): Promise<any> {
+  public async get(@Path() id: string): Promise<ExamplesResult> {
     const cheriBin = `cat ./binaries/${id}-cheri | ssh ${username}@${address} "cat >${id}; chmod +x ${id}; ${id} with args; rm ${id}`
     return ({
       self: await new Promise((resolve) => {

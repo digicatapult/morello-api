@@ -99,7 +99,8 @@ jobs:
          time: '30s'
       - name: Run unit tests
         run: npm run test:unit
-      #- name: Run integration tests
+      # TODO wait until docker image is ready for integration tests
+      #- name: Run integration tests 
       #  run: npm run test:integration
 
   check-version:

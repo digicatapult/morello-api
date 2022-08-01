@@ -1,5 +1,5 @@
-import { Scenario } from "./models/scenario";
+import type { ExamplesResult } from "./models/scenario";
 
 export type {
-  Scenario
+  ExamplesResult
 }

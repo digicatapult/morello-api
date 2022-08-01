@@ -1,3 +1,5 @@
 {
-  "morello_host": "MORELLO_HOST"
+  "morello_host": {
+    "address": "MORELLO_HOST"
+  }
 }
