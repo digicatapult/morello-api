@@ -26,6 +26,7 @@ WORKDIR /morello-api
 COPY package*.json ./
 RUN npm install --production
 COPY --from=builder /morello-api/build .
+COPY --from=builder /morello-api/config ./config
 
 EXPOSE 80
-CMD [ "node", "./build/index.js" ]
+CMD [ "node", "./index.js" ]
