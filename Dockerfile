@@ -18,6 +18,9 @@ FROM node:16-alpine as service
 
 WORKDIR /morello-api
 
+# Install base dependencies
+RUN npm -g install npm@8.x.x
+
 COPY package*.json ./
 RUN npm install --production
 COPY --from=builder /morello-api/build .
