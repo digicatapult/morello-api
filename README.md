@@ -14,6 +14,11 @@ npm run build
 npn run dev
 ```
 
+#### SSH Configuration
+> .ssh/known_hosts
+
+> confirming
+
 ## Tests
 So far we have two tests **unit** and **integration** each could be executed by calling the below commands
 ```sh
