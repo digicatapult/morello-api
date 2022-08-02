@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.0.0-experimental
-FROM node:latest as builder
+FROM node:16-alpine as builder
 
 WORKDIR /morello-api
 
@@ -14,11 +14,10 @@ COPY . .
 RUN npm run build
 
 # Service
-FROM node:latest as service
+FROM node:16-alpine as service
 
 WORKDIR /morello-api
 
-# Install base dependencies
 RUN npm -g install npm@8.x.x
 
 COPY package*.json ./
