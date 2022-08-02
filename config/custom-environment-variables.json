@@ -1,0 +1,12 @@
+{
+  "log": {
+    "LEVEL": "LOG_LEVEL"
+  },
+  "morello": {
+    "address": "MORELLO_HOST",
+    "username": "MORELLO_USERNAME"
+  },
+  "app": {
+    "PORT": "PORT"
+  }
+}

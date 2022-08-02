@@ -1,0 +1,9 @@
+{
+  "log": {
+    "level": "warn"
+  },
+  "morello": {
+    "address": "100.100.100.100",
+    "username": "username"
+  }
+}

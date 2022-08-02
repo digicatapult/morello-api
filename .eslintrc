@@ -15,7 +15,7 @@
   },
   "overrides": [
     {
-      "files": ["**/test/**/*.test.js"],
+      "files": ["**/*.test.js"],
       "rules": {
         "prettier/prettier": "error"
       },

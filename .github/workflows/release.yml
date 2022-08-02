@@ -29,98 +29,28 @@ jobs:
           echo "::set-output name=REPO_NAME::$REPO_NAME"
           echo "::set-output name=ORG_NAME::$ORG_NAME"
 
-  helm-lint:
-    runs-on: ubuntu-latest
-    needs: [preconditions]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Set up Helm
-        uses: azure/setup-helm@v1
-        with:
-          version: v3.4.0
-      - uses: actions/setup-python@v2
-        with:
-          python-version: 3.7
-      - name: Set up chart-testing
-        uses: helm/chart-testing-action@v2.0.1
-      - name: Run chart-testing (lint)
-        run: ct lint --validate-maintainers false --charts helm/${{ needs.preconditions.outputs.repo_name }}/
-
-  helm-test:
-    runs-on: ubuntu-latest
-    needs: [preconditions]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Setup QEMU
-        uses: docker/setup-qemu-action@v1
-        with:
-          platforms: all
-      - name: Setup Docker Buildx
-        id: buildx
-        uses: docker/setup-buildx-action@v1
-        with:
-          buildkitd-flags: '--debug'
-      - name: Set up Helm
-        uses: azure/setup-helm@v1
-        with:
-          version: v3.4.0
-      - uses: actions/setup-python@v2
-        with:
-          python-version: 3.7
-      - name: Set up chart-testing
-        uses: helm/chart-testing-action@v2.0.1
-      - name: Setup Minikube
-        uses: manusa/actions-setup-minikube@v2.3.0
-        with:
-          minikube version: 'v1.17.1'
-          kubernetes version: 'v1.19.2'
-      - name: Login to minikube docker registry
-        run: eval $(minikube -p minikube docker-env)
-      - name: Build and Publish image
-        uses: docker/build-push-action@v2
-        with:
-          builder: ${{ steps.buildx.outputs.name }}
-          context: .
-          load: true
-          file: ./Dockerfile
-          tags: |
-            ${{ needs.preconditions.outputs.repo_name }}:latest
-          labels: |
-            org.opencontainers.image.title=${{ needs.preconditions.outputs.repo_name }}
-            org.opencontainers.image.description=${{ github.event.repository.description }}
-            org.opencontainers.image.source=${{ github.event.repository.html_url }}
-            org.opencontainers.image.url=${{ github.event.repository.html_url }}
-            org.opencontainers.image.revision=${{ github.sha }}
-      - name: Run chart-testing (install)
-        run: ct install  --charts helm/${{ needs.preconditions.outputs.repo_name }}/
-
   lint:
     name: Run lint
     runs-on: ubuntu-latest
     needs: [preconditions]
     steps:
-      - uses: actions/checkout@master
-      - uses: actions/setup-node@master
-        with:
-          node-version: 16.x
-      - name: Cache Node.js modules
-        uses: actions/cache@v1
-        with:
-          path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
-          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-node-
-            ${{ runner.OS }}-
-      - name: Install Packages
-        run: npm ci
-      - name: Lint
-        run: npm run lint
+    - uses: actions/checkout@master
+    - uses: actions/setup-node@master
+      with:
+        node-version: 16.x
+    - name: Cache Node.js modules
+      uses: actions/cache@v1
+      with:
+        path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+        key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.OS }}-node-
+          ${{ runner.OS }}-
+    - name: Install Packages
+      run: npm ci
+    - name: Lint
+      run: npm run lint
+
   dependency-check:
     name: Run dependency check
     runs-on: ubuntu-latest
@@ -142,6 +72,7 @@ jobs:
         run: npm ci
       - name: Dependency Check
         run: npm run depcheck
+
   tests:
     name: Run tests
     runs-on: ubuntu-latest
@@ -162,13 +93,16 @@ jobs:
       - name: Install Packages
         run: npm ci
       - name: Setup dependencies
-        run: docker-compose up -d
+        run: docker-compose up -d 
       - name: Sleep
         uses: kibertoad/wait-action@1.0.1
         with:
-          time: '30s'
-      - name: Run tests
-        run: npm run test
+         time: '30s'
+      - name: Run unit tests
+        run: npm run test:unit
+      - name: Run integration tests 
+        run: npm run test:integration
+
   check-version:
     name: 'Check version'
     runs-on: ubuntu-latest
@@ -192,10 +126,9 @@ jobs:
         shell: bash
         run: |
           echo "Skipping release as current version has already been published"
-
   publish:
     name: 'Publish package'
-    needs: [preconditions, helm-lint, helm-test, lint, dependency-check, tests, check-version]
+    needs: [preconditions, dependency-check, tests, check-version, lint]
     runs-on: ubuntu-latest
     if: ${{ needs.check-version.outputs.is_new_version == 'true' }}
 
@@ -237,13 +170,6 @@ jobs:
             org.opencontainers.image.revision=${{ github.sha }}
             org.opencontainers.image.version=${{ needs.check-version.outputs.version }}
             org.opencontainers.image.created=${{ needs.check-version.outputs.build_date }}
-
-      # Publish helm charts
-      - name: Publish Helm charts
-        uses: stefanprodan/helm-gh-pages@master
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          charts_dir: helm
 
       # Build github release
       - name: Delete latest release

@@ -1,10 +1,16 @@
-node_modules
-coverage
-.DS_Store
-.nyc_output
-.idea
-.env
-.vscode
+config/local.json
 
-github_token
-helm/**/*.tgz
+node_modules/
+build
+src/swagger.json
+src/routes.ts
+dist
+
+.npm
+.cache
+npm-debug.log*
+*.log
+*.tsbuildinfo
+*.pid
+*.seed
+*.pid.lock
