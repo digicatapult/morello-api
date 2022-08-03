@@ -24,7 +24,7 @@ export class scenario extends Controller implements IScenario {
 
   execute(bin: string): Promise<HostResponse> {
     const scp = `scp -P ${this.port} bin/${bin} ${this.address}:/tmp`
-    const ssh = `ssh -p ${this.port} ${this.address} -tt 'chmod +x /tmp/${bin}; /tmp/${bin}' 2>&1`
+    const ssh = `ssh -p ${this.port} ${this.address} -tt 'chmod +x /tmp/${bin}; /tmp/${bin}; rm /tmp/${bin}' 2>&1`
     this.log.debug({ msg: `executing ${bin} on ${this.address} host`, scp, ssh })
 
     return new Promise((resolve) => {
