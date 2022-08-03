@@ -4,7 +4,8 @@
   },
   "morello": {
     "address": "127.0.0.1",
-    "username": "root"
+    "username": "root",
+    "port": 22
   },
   "app": {
     "port": 3000

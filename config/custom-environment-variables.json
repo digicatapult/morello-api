@@ -7,6 +7,6 @@
     "username": "MORELLO_USERNAME"
   },
   "app": {
-    "PORT": "PORT"
+    "port": "PORT"
   }
 }
