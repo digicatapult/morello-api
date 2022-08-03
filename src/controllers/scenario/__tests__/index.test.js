@@ -33,12 +33,12 @@ describe('/scenario controller', () => {
     })
 
     it('returns the correct state along with stderr', () => {
-      expect(res).to.include.all.keys(['morello', 'self'])
-      expect(res.morello).to.deep.equal({
+      expect(res).to.include.all.keys(['aarch64', 'cheri'])
+      expect(res.aarch64).to.deep.equal({
         output: 'fatal error',
         status: 'error',
       })
-      expect(res.self).to.deep.equal({
+      expect(res.cheri).to.deep.equal({
         output: 'fatal error',
         status: 'error',
       })
@@ -46,15 +46,15 @@ describe('/scenario controller', () => {
   })
 
   it('exectures commands and returns formmated output', () => {
-    expect(res).to.include.all.keys(['morello', 'self'])
+    expect(res).to.include.all.keys(['aarch64', 'cheri'])
     expect(res).to.deep.equal({
-      morello: {
+      aarch64: {
         status: 'success',
         output: {
           stdout: 'ok',
         },
       },
-      self: {
+      cheri: {
         status: 'success',
         output: {
           stdout: 'ok',

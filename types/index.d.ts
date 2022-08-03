@@ -1,7 +1,13 @@
-import type { ExamplesResult, IScenario, HostResponse } from "./models/scenario";
+import type {
+  ExamplesResult,
+  IScenario,
+  HostResponse,
+  Executables
+} from "./models/scenario";
 
 export type {
   ExamplesResult,
   IScenario,
+  Executables,
   HostResponse,
 }

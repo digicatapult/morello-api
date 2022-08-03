@@ -6,7 +6,7 @@ import {
 } from 'tsoa'
 import config from 'config'
 import { exec } from 'child_process'
-import { ExamplesResult, IScenario, HostResponse } from '../../../types'
+import { ExamplesResult, IScenario, HostResponse, Executables } from '../../../types'
 import Logger from '../../utils/Logger'
 
 @Route('scenario')
@@ -22,31 +22,27 @@ export class scenario extends Controller implements IScenario {
     this.log = Logger.child({ controller: '/scenario', ...config.get('morello') })
   }
 
-  execute(cmd: string): Promise<HostResponse> {
-    this.log.info(`executing ${cmd}`)
+  execute(bin: string): Promise<HostResponse> {
+    const scp = `scp -P ${this.port} bin/${bin} ${this.address}:/tmp`
+    const ssh = `ssh -p ${this.port} ${this.address} -tt 'chmod +x /tmp/${bin}; /tmp/${bin}' 2>&1`
+    this.log.debug({ msg: `executing ${bin} on ${this.address} host`, scp, ssh })
 
     return new Promise((resolve) => {
-      exec(cmd, (err, stdout, stderr) => resolve({
-        status: (err || stderr) ? 'error': 'success',
-        output: err ? err : stderr ? stderr : stdout,
+      exec(`${scp}; ${ssh}`, (err, stdout) => resolve({
+        status: err ? 'error': 'success',
+        output: stdout,
+        ...err ? { exception: err } : {}
       }))
     })
   }
   
-  @Get('{id}')
-  public async get(@Path() id: string): Promise<ExamplesResult> {
-    this.log.info(`attempting to execute ${id} scenario`)
-    // TODO - example validation, return 404 or something if it does not exists
-    // - helper for executing commands (exec)
-    // - helper for getting the binary files
-
-    // const cheriBin = `cat ./binaries/${id}-cheri | ssh ${address} -p 2222 "cat >${id}; chmod +x ${id}; ${id} with args; rm ${id}`
-    const morelloCmd = `ssh -p ${this.port} ${this.address} 'ls -la'`
-    const basicCmd = 'ls -la'
-
+  @Get('{executable}')
+  public async get(@Path() executable: Executables): Promise<ExamplesResult> {
+    this.log.debug(`attempting to execute ${executable} scenario`)
+    
     return ({
-      self: await this.execute(basicCmd),
-      morello: await this.execute(morelloCmd) 
+      cheri: await this.execute(`${executable}-cheri`),
+      aarch64: await this.execute(`${executable}-aarch64`),
     })
   }
 }
