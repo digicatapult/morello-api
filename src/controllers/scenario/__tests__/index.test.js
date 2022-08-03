@@ -17,7 +17,11 @@ describe('/scenario/{example} endpoint', () => {
   let stubs = {}
 
   beforeEach(async () => {
-    stubs.exec = stub(child, 'exec').yields(null, { stdout: 'ok' })
+    stubs.exec = stub(child, 'exec')
+    stubs.exec.onCall(0).yields(null, 'stdout - some output')
+    stubs.exec.onCall(1)
+    stubs.exec.onCall(2).yields(null, 'stdout - some output')
+    stubs.exec.onCall(3)
     res = await execute()
   })
 
@@ -28,7 +32,11 @@ describe('/scenario/{example} endpoint', () => {
   describe('if executing binaries fails', () => {
     beforeEach(async () => {
       stubs.exec.restore()
-      stubs.exec = stub(child, 'exec').yields({ msg: 'fatal error' }, 'stdout - some output')
+      stubs.exec = stub(child, 'exec')
+      stubs.exec.onCall(0).yields({ message: 'cheri - error' }, 'stdout - some output')
+      stubs.exec.onCall(1)
+      stubs.exec.onCall(2).yields({ message: 'aarch64 - error' }, 'stdout - some output')
+      stubs.exec.onCall(3)
       res = await execute()
     })
 
@@ -37,12 +45,12 @@ describe('/scenario/{example} endpoint', () => {
       expect(res.aarch64).to.deep.equal({
         status: 'error',
         output: 'stdout - some output',
-        exception: { msg: 'fatal error' },
+        exception: { message: 'aarch64 - error' },
       })
       expect(res.cheri).to.deep.equal({
         status: 'error',
         output: 'stdout - some output',
-        exception: { msg: 'fatal error' },
+        exception: { message: 'cheri - error' },
       })
     })
   })
@@ -52,7 +60,9 @@ describe('/scenario/{example} endpoint', () => {
       stubs.exec.restore()
       stubs.exec = stub(child, 'exec')
       stubs.exec.onCall(0).yields({ msg: 'fatal error' }, 'stdout - some output')
-      stubs.exec.onCall(1).yields(null, 'it was a success')
+      stubs.exec.onCall(1)
+      stubs.exec.onCall(2).yields(null, 'it was a success')
+      stubs.exec.onCall(3)
       res = await execute()
     })
 
@@ -77,15 +87,11 @@ describe('/scenario/{example} endpoint', () => {
     expect(res).to.deep.equal({
       aarch64: {
         status: 'success',
-        output: {
-          stdout: 'ok',
-        },
+        output: 'stdout - some output',
       },
       cheri: {
         status: 'success',
-        output: {
-          stdout: 'ok',
-        },
+        output: 'stdout - some output',
       },
     })
   })

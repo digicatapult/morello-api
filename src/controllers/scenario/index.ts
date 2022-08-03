@@ -31,7 +31,7 @@ export class scenario extends Controller implements IScenario {
 
     return new Promise((resolve) => {
       exec(`${scp}; ${ssh}`, (err, stdout) => {
-        exec(rm)
+        exec(rm) // fire and forget, remove binary file
         return resolve({
           status: err ? 'error': 'success',
           output: stdout,
