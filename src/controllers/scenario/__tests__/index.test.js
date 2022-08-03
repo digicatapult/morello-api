@@ -12,7 +12,7 @@ const execute = async () => {
   }
 }
 
-describe('/scenario controller', () => {
+describe('/scenario/{example} endpoint', () => {
   let res
   let stubs = {}
 
@@ -28,24 +28,51 @@ describe('/scenario controller', () => {
   describe('if executing binaries fails', () => {
     beforeEach(async () => {
       stubs.exec.restore()
-      stubs.exec = stub(child, 'exec').yields('fatal error')
+      stubs.exec = stub(child, 'exec').yields({ msg: 'fatal error' }, 'stdout - some output')
       res = await execute()
     })
 
-    it('returns the correct state along with stderr', () => {
+    it('returns correct state along with exceptions if both binaries fail', () => {
       expect(res).to.include.all.keys(['aarch64', 'cheri'])
       expect(res.aarch64).to.deep.equal({
-        output: 'fatal error',
         status: 'error',
+        output: 'stdout - some output',
+        exception: { msg: 'fatal error' },
       })
       expect(res.cheri).to.deep.equal({
-        output: 'fatal error',
         status: 'error',
+        output: 'stdout - some output',
+        exception: { msg: 'fatal error' },
       })
     })
   })
 
-  it('exectures commands and returns formmated output', () => {
+  describe('and if some binaries fail and some succeed', () => {
+    beforeEach(async () => {
+      stubs.exec.restore()
+      stubs.exec = stub(child, 'exec')
+      stubs.exec.onCall(0).yields({ msg: 'fatal error' }, 'stdout - some output')
+      stubs.exec.onCall(1).yields(null, 'it was a success')
+      res = await execute()
+    })
+
+    it('returns formatted output with one with clear indication of failed ones', () => {
+      expect(res).to.include.all.keys(['aarch64', 'cheri'])
+      expect(res).to.deep.equal({
+        aarch64: {
+          status: 'success',
+          output: 'it was a success',
+        },
+        cheri: {
+          status: 'error',
+          output: 'stdout - some output',
+          exception: { msg: 'fatal error' },
+        },
+      })
+    })
+  })
+
+  it('returns a formatted output of both architectuures', () => {
     expect(res).to.include.all.keys(['aarch64', 'cheri'])
     expect(res).to.deep.equal({
       aarch64: {
