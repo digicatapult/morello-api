@@ -1,3 +1,21 @@
 version: '3'
 
-services: {}
+services:
+  morello-sdk-qemu:
+    image: digicatapult/morello-sdk:v1.0.1
+    container_name: morello-sdk-qemu
+    command: /bin/bash -c "
+        qemu-system-morello
+        -machine virt,gic-version=3
+        -cpu morello
+        -bios edk2-aarch64-code.fd
+        -m 2048
+        -nographic
+        -drive if=none,file=/home/cheri/cheribsd-minimal-morello-purecap.img,id=drv,format=raw
+        -device virtio-blk-pci,drive=drv
+        -device virtio-net-pci,netdev=net0
+        -netdev 'user,id=net0,hostfwd=tcp::19507-:22'
+        -device virtio-rng-pci
+        -snapshot"
+    ports:
+      - "1022:19507"
