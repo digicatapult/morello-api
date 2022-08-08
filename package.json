@@ -1,6 +1,6 @@
 {
   "name": "@digicatapult/morello-api",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "An interface for executing binaries on it's self and morello host.",
   "main": "src/index.ts",
   "scripts": {
@@ -42,7 +42,7 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "mocha": "^10.0.0",
-    "nodemon": "^2.0.16",
+    "nodemon": "^2.0.19",
     "prettier": "^2.7.1",
     "sinon": "^14.0.0",
     "ts-node": "^10.9.1",
