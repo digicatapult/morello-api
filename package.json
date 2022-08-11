@@ -1,6 +1,6 @@
 {
   "name": "@digicatapult/morello-api",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "An interface for executing binaries on it's self and morello host.",
   "main": "src/index.ts",
   "scripts": {
