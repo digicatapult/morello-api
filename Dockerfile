@@ -31,7 +31,7 @@ RUN ./fetch --repo="${MORELLO_EXAMPLES_REPO}" --tag="${MORELLO_EXAMPLES_VERSION}
 # Service
 FROM node:16-alpine as service
 
-RUN apk --no-cache add ssh
+RUN apk --no-cache add openssh
 WORKDIR /morello-api
 
 RUN npm -g install npm@8.x.x
