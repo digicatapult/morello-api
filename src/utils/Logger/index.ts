@@ -1,4 +1,4 @@
-import pino, { Logger } from "pino"
+import pino, { Logger } from 'pino'
 import config from 'config'
 
 // TODO make a class with methods like 
