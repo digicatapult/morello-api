@@ -1,10 +1,11 @@
-import config from 'config';
-import { urlencoded, json } from 'body-parser';
-import * as swaggerUI from 'swagger-ui-express';
-import express, { Express } from 'express';
+import config from 'config'
+import { urlencoded, json } from 'body-parser'
+import * as swaggerUI from 'swagger-ui-express'
+import express, { Express } from 'express'
+import cors from 'cors'
 
-import { RegisterRoutes } from './routes';
-import * as swaggerJson from './swagger.json';
+import { RegisterRoutes } from './routes'
+import * as swaggerJson from './swagger.json'
 
 import logger from './utils/Logger'
 
@@ -14,6 +15,7 @@ let log = logger.child({ example: "child-example" })
 
 app.use(urlencoded({ extended: true }))
 app.use(json())
+app.use(cors())
 RegisterRoutes(app)
 app.use(['/openapi', '/docs', '/swagger'], swaggerUI.serve, swaggerUI.setup(swaggerJson))
 // TODO - errors and error handler 

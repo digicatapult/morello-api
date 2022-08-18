@@ -22,7 +22,6 @@ export class scenario extends Controller implements IScenario {
     this.log = Logger.child({ controller: '/scenario', ...config.get('morello') })
   }
 
-
   execute(bin: string): Promise<HostResponse> {
     const scp = `scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -q -P ${this.port} bin/${bin} ${this.address}:/tmp`
     const ssh = `ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -q -p ${this.port} ${this.address} -tt 'chmod +x /tmp/${bin}; /tmp/${bin} with args' 2>&1`
