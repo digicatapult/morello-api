@@ -4,7 +4,8 @@
   },
   "morello": {
     "address": "MORELLO_HOST",
-    "username": "MORELLO_USERNAME"
+    "username": "MORELLO_USERNAME",
+    "port": "MORELLO_PORT"
   },
   "app": {
     "port": "PORT"
