@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Path,
+  Query,
   Route,
 } from 'tsoa'
 import config from 'config'
@@ -42,12 +43,13 @@ export class scenario extends Controller implements IScenario {
   }
   
   @Get('{executable}')
-  public async get(@Path() executable: Executables): Promise<ExamplesResult> {
+  public async get(@Path() executable: Executables, @Query() params?: string[]): Promise<ExamplesResult> {
     this.log.debug(`attempting to execute ${executable} scenario`)
     
     return ({
-      cheri: await this.execute(`${executable}-cheri`),
-      aarch64: await this.execute(`${executable}-aarch64`),
+      cheri: await this.execute(`${executable}-cheri ${params?.join(' ')}`),
+      aarch64: await this.execute(`${executable}-aarch64 ${params?.join(' ')}`),
     })
   }
 }
+
