@@ -46,8 +46,8 @@ export class scenario extends Controller implements IScenario {
     this.log.debug(`attempting to execute ${executable} scenario with [${params}] arguments`)
     
     return ({
-      cheri: await this.execute(`${executable}-cheri`),
-      aarch64: await this.execute(`${executable}-aarch64`),
+      cheri: await this.execute(`${executable}-cheri ${params}`),
+      aarch64: await this.execute(`${executable}-aarch64 ${params}`),
     })
   }
 }
