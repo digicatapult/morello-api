@@ -45,6 +45,6 @@ export class scenario extends Controller implements IScenario {
   public async get(@Path() executable: Executables , @Query() params: string[]): Promise<HostResponse> {
     this.log.debug(`attempting to execute ${executable} scenario with [${params}] arguments`)
     
-    return this.execute(`${executable}-cheri ${params}`)
+    return this.execute(`${executable} ${params}`)
   }
 }
