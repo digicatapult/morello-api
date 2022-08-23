@@ -13,7 +13,7 @@ export interface IScenario {
   readonly address: string
   readonly port: number
   log: typeof Logger
-  get: (executable: Executables) => Promise<ExamplesResult>
+  get: (executable: Executables, params: string[]) => Promise<ExamplesResult>
   execute: (cmd: string) => Promise<HostResponse>
 }
 

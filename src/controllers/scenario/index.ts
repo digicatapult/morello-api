@@ -1,6 +1,7 @@
 import {
   Controller,
   Get,
+  Query,
   Path,
   Route,
 } from 'tsoa'
@@ -41,12 +42,12 @@ export class scenario extends Controller implements IScenario {
   }
   
   @Get('{executable}')
-  public async get(@Path() executable: Executables): Promise<ExamplesResult> {
-    this.log.debug(`attempting to execute ${executable} scenario`)
+  public async get(@Path() executable: Executables , @Query() params: string[]): Promise<ExamplesResult> {
+    this.log.debug(`attempting to execute ${executable} scenario with [${params}] arguments`)
     
     return ({
-      cheri: await this.execute(`${executable}-cheri`),
-      aarch64: await this.execute(`${executable}-aarch64`),
+      cheri: await this.execute(`${executable}-cheri ${params}`),
+      aarch64: await this.execute(`${executable}-aarch64 ${params}`),
     })
   }
 }
