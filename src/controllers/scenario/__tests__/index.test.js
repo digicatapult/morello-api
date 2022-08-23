@@ -18,10 +18,8 @@ describe('/scenario/{example} endpoint', () => {
 
   beforeEach(async () => {
     stubs.exec = stub(child, 'exec')
-    stubs.exec.onCall(0).yields(null, 'stdout - some output')
+    stubs.exec.onCall(0).yields(null, 'stdout - success')
     stubs.exec.onCall(1)
-    stubs.exec.onCall(2).yields(null, 'stdout - some output')
-    stubs.exec.onCall(3)
     res = await execute()
   })
 
@@ -33,66 +31,25 @@ describe('/scenario/{example} endpoint', () => {
     beforeEach(async () => {
       stubs.exec.restore()
       stubs.exec = stub(child, 'exec')
-      stubs.exec.onCall(0).yields({ message: 'cheri - error' }, 'stdout - some output')
+      stubs.exec.onCall(0).yields({ message: 'error' }, 'stdout - some error output')
       stubs.exec.onCall(1)
-      stubs.exec.onCall(2).yields({ message: 'aarch64 - error' }, 'stdout - some output')
-      stubs.exec.onCall(3)
       res = await execute()
     })
 
     it('returns correct state along with exceptions if both binaries fail', () => {
-      expect(res).to.include.all.keys(['aarch64', 'cheri'])
-      expect(res.aarch64).to.deep.equal({
-        status: 'error',
-        output: 'stdout - some output',
-        exception: { message: 'aarch64 - error' },
-      })
-      expect(res.cheri).to.deep.equal({
-        status: 'error',
-        output: 'stdout - some output',
-        exception: { message: 'cheri - error' },
-      })
-    })
-  })
-
-  describe('and if some binaries fail and some succeed', () => {
-    beforeEach(async () => {
-      stubs.exec.restore()
-      stubs.exec = stub(child, 'exec')
-      stubs.exec.onCall(0).yields({ msg: 'fatal error' }, 'stdout - some output')
-      stubs.exec.onCall(1)
-      stubs.exec.onCall(2).yields(null, 'it was a success')
-      stubs.exec.onCall(3)
-      res = await execute()
-    })
-
-    it('returns formatted output with one with clear indication of failed ones', () => {
-      expect(res).to.include.all.keys(['aarch64', 'cheri'])
       expect(res).to.deep.equal({
-        aarch64: {
-          status: 'success',
-          output: 'it was a success',
-        },
-        cheri: {
-          status: 'error',
-          output: 'stdout - some output',
-          exception: { msg: 'fatal error' },
-        },
+        status: 'error',
+        output: 'stdout - some error output',
+        exception: { message: 'error' },
       })
     })
   })
 
-  it('returns a formatted output of both architectuures', () => {
-    expect(res).to.include.all.keys(['aarch64', 'cheri'])
+  it('returns a formatted output', () => {
+    expect(res).to.include.all.keys(['output', 'status'])
     expect(res).to.deep.equal({
-      aarch64: {
-        status: 'success',
-        output: 'stdout - some output',
-      },
-      cheri: {
-        status: 'success',
-        output: 'stdout - some output',
-      },
+      status: 'success',
+      output: 'stdout - success',
     })
   })
 })

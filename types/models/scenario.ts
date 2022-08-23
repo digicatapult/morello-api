@@ -13,11 +13,6 @@ export interface IScenario {
   readonly address: string
   readonly port: number
   log: typeof Logger
-  get: (executable: Executables, params: string[]) => Promise<ExamplesResult>
+  get: (executable: Executables, params: string[]) => Promise<HostResponse>
   execute: (cmd: string) => Promise<HostResponse>
-}
-
-export interface ExamplesResult {
-  aarch64: HostResponse,
-  cheri: HostResponse,
 }

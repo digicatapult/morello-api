@@ -7,7 +7,7 @@ import {
 } from 'tsoa'
 import config from 'config'
 import { exec } from 'child_process'
-import { ExamplesResult, IScenario, HostResponse, Executables } from '../../../types'
+import { IScenario, HostResponse, Executables } from '../../../types'
 import Logger from '../../utils/Logger'
 
 @Route('scenario')
@@ -42,12 +42,9 @@ export class scenario extends Controller implements IScenario {
   }
   
   @Get('{executable}')
-  public async get(@Path() executable: Executables , @Query() params: string[]): Promise<ExamplesResult> {
+  public async get(@Path() executable: Executables , @Query() params: string[]): Promise<HostResponse> {
     this.log.debug(`attempting to execute ${executable} scenario with [${params}] arguments`)
     
-    return ({
-      cheri: await this.execute(`${executable}-cheri ${params}`),
-      aarch64: await this.execute(`${executable}-aarch64 ${params}`),
-    })
+    return this.execute(`${executable}-cheri ${params}`)
   }
 }
