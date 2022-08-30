@@ -6,7 +6,7 @@ const child = require('child_process')
 const execute = async () => {
   try {
     const controller = new scenario()
-    return await controller.get()
+    return await controller.get('out-of-bounds-read')
   } catch (err) {
     return err
   }
