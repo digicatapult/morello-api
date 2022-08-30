@@ -9,7 +9,7 @@ import config from 'config'
 import { exec } from 'child_process'
 import { IScenario, HostResponse, Executables } from '../../../types'
 import Logger from '../../utils/Logger'
-import { escapeParam, getValidHeredocEOF, getRandomProcessName } from '../../utils/params'
+import * as util from '../../utils/params'
 
 @Route('scenario')
 export class scenario extends Controller implements IScenario {
@@ -25,16 +25,18 @@ export class scenario extends Controller implements IScenario {
   }
 
   execute(bin: string, params: string[] = []): Promise<HostResponse> {
-    params = params.map(p => escapeParam(p))
-    const destBin = getRandomProcessName(bin)
-    const eof = getValidHeredocEOF(bin, params)
+    params = params.map(p => util.escapeParam(p))
+    const destBin = util.getRandomProcessName(bin)
+    const eof = util.getValidHeredocEOF(bin, params)
 
     const scp = `scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -q -P ${this.port} bin/${bin} ${this.address}:/tmp/${destBin}`
-    const ssh = `ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -q -p ${this.port} ${this.address} -t <<${eof}
-      chmod +x /tmp/${bin};
-      /tmp/${destBin} ${params.join(' ')} 2>&1;
-      exit;
-    ${eof}`
+    const ssh =
+`ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -q -p ${this.port} ${this.address} -t << '${eof}'
+chmod +x /tmp/${bin};
+/tmp/${destBin} ${params.join(' ')} 2>&1;
+exit;
+${eof}`
+
     const rm = `ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -q -p ${this.port} ${this.address} rm -v /tmp/${destBin} &> /dev/null`
     this.log.debug({ msg: `executing ${bin} on ${this.address} host`, scp, ssh })
 
