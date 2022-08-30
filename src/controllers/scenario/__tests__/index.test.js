@@ -47,6 +47,10 @@ chmod +x /tmp/out-of-bounds-read-cheri;
 /tmp/out-of-bounds-read-cheri_foo 'test' 2>&1;
 exit;
 EOF`
+
+      console.log([...Buffer.from(firstCallArg)].join())
+      console.log([...Buffer.from(expectation)].join())
+
       expect(firstCallArg).to.equal(expectation)
     })
 
