@@ -3,6 +3,10 @@ const { scenario } = require('../index')
 const { stub } = require('sinon')
 const { expect } = require('chai')
 const child = require('child_process')
+const config = require('config')
+
+const address = `${config.get('morello.username')}@${config.get('morello.address')}`
+const port = config.get('morello.port')
 
 const execute = async () => {
   try {
@@ -42,14 +46,11 @@ describe('/scenario/{example} endpoint', () => {
 
     it('calls exec correctly', () => {
       const firstCallArg = stubs.exec.firstCall.args[0]
-      const expectation = `scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -q -P 1022 bin/out-of-bounds-read-cheri root@127.0.0.1:/tmp/out-of-bounds-read-cheri_foo; ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -q -p 1022 root@127.0.0.1 -t << 'EOF'
+      const expectation = `scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -q -P ${port} bin/out-of-bounds-read-cheri ${address}:/tmp/out-of-bounds-read-cheri_foo; ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -q -p ${port} ${address} -t << 'EOF'
 chmod +x /tmp/out-of-bounds-read-cheri;
 /tmp/out-of-bounds-read-cheri_foo 'test' 2>&1;
 exit;
 EOF`
-
-      console.log([...Buffer.from(firstCallArg)].join())
-      console.log([...Buffer.from(expectation)].join())
 
       expect(firstCallArg).to.equal(expectation)
     })
