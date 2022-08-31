@@ -7,19 +7,19 @@ import cors from 'cors'
 import { RegisterRoutes } from './routes'
 import * as swaggerJson from './swagger.json'
 
+import { errorHandler } from './utils/errors'
 import logger from './utils/Logger'
 
 const app: Express = express()
 const port: Number = config.get('app.port')
-let log = logger.child({ example: "child-example" })
 
 app.use(urlencoded({ extended: true }))
 app.use(json())
 app.use(cors())
 RegisterRoutes(app)
 app.use(['/openapi', '/docs', '/swagger'], swaggerUI.serve, swaggerUI.setup(swaggerJson))
-// TODO - errors and error handler 
+app.use(errorHandler)
 
 app.listen(port, () => {
-  log.info('Server is running')
-});
+  logger.info('Server is running')
+})

@@ -4,12 +4,14 @@ import {
   Query,
   Path,
   Route,
+  Response,
 } from 'tsoa'
 import config from 'config'
 import { exec } from 'child_process'
 import { IScenario, HostResponse, Executables } from '../../../types'
 import Logger from '../../utils/Logger'
 import * as util from '../../utils/params'
+import { ValidateErrorJSON } from '../../utils/errors'
 
 @Route('scenario')
 export class scenario extends Controller implements IScenario {
@@ -43,15 +45,19 @@ ${eof}`
     return new Promise((resolve) => {
       exec(`${scp}; ${ssh}`, (err, stdout) => {
         exec(rm) // fire and forget, remove binary file
-        return resolve({
-          status: err ? 'error': 'success',
+        return resolve(err ? {
+          status: 'error',
           output: stdout,
-          ...err ? { exception: err } : {}
+          exception: err
+        } : {
+          status: 'success',
+          output: stdout,
         })
       })
     })
   }
 
+  @Response<ValidateErrorJSON>(422, "Validation Failed")
   @Get('{executable}')
   public async get(@Path() executable: Executables , @Query() params?: string[]): Promise<HostResponse> {
     this.log.debug(`attempting to execute ${executable} scenario with [${params}] arguments`)

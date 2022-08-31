@@ -1,6 +1,6 @@
 {
   "name": "@digicatapult/morello-api",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "An interface for executing binaries on it's self and morello host.",
   "main": "src/index.ts",
   "scripts": {
@@ -8,7 +8,7 @@
     "build": "tsoa spec-and-routes && tsc && cp -rv bin/ build/bin",
     "start": "node build/index.js",
     "depcheck": "depcheck --ignores='concurrently,nodemon'",
-    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q build/index.js\"",
+    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q build/index.js | pino-colada\"",
     "test:unit": "NODE_ENV=test ./node_modules/.bin/mocha -r ts-node/register ./src/**/*.test.js",
     "test:integration": "./node_modules/.bin/mocha -r ts-node/register ./integration/*.test.js"
   },
@@ -54,7 +54,9 @@
     "config": "^3.3.7",
     "cors": "^2.8.5",
     "express": "^4.18.1",
+    "express-async-errors": "^3.1.1",
     "pino": "^7.11.0",
+    "pino-colada": "^2.2.2",
     "swagger-ui-express": "^4.4.0",
     "tsoa": "^4.0.0"
   }

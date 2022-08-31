@@ -13,11 +13,18 @@ export type Executables =
   'use-after-free-aarch64' |
   'use-after-free-cheri'
 
-export type HostResponse = {
-  status: 'success' | 'error' | 'exception',
+export type HostResponseSuccess = {
+  status: 'success',
   output: string,
-  exception?: ExecException,
 }
+
+export type HostResponseError = {
+  status: 'error',
+  output: string,
+  exception: ExecException,
+}
+
+export type HostResponse = HostResponseSuccess | HostResponseError
 
 export interface IScenario {
   readonly address: string
