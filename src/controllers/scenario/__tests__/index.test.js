@@ -1,12 +1,17 @@
+const util = require('../../../utils/params')
 const { scenario } = require('../index')
 const { stub } = require('sinon')
 const { expect } = require('chai')
 const child = require('child_process')
+const config = require('config')
+
+const address = `${config.get('morello.username')}@${config.get('morello.address')}`
+const port = config.get('morello.port')
 
 const execute = async () => {
   try {
     const controller = new scenario()
-    return await controller.get()
+    return await controller.get('out-of-bounds-read-cheri', ['test'])
   } catch (err) {
     return err
   }
@@ -17,6 +22,8 @@ describe('/scenario/{example} endpoint', () => {
   let stubs = {}
 
   beforeEach(async () => {
+    stubs.getRandomProcessName = stub(util, 'getRandomProcessName')
+    stubs.getRandomProcessName.returns('out-of-bounds-read-cheri_foo')
     stubs.exec = stub(child, 'exec')
     stubs.exec.onCall(0).yields(null, 'stdout - success')
     stubs.exec.onCall(1)
@@ -24,6 +31,7 @@ describe('/scenario/{example} endpoint', () => {
   })
 
   afterEach(() => {
+    stubs.getRandomProcessName.restore()
     stubs.exec.restore()
   })
 
@@ -34,6 +42,17 @@ describe('/scenario/{example} endpoint', () => {
       stubs.exec.onCall(0).yields({ message: 'error' }, 'stdout - some error output')
       stubs.exec.onCall(1)
       res = await execute()
+    })
+
+    it('calls exec correctly', () => {
+      const firstCallArg = stubs.exec.firstCall.args[0]
+      const expectation = `scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -q -P ${port} bin/out-of-bounds-read-cheri ${address}:/tmp/out-of-bounds-read-cheri_foo; ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -q -p ${port} ${address} -t << 'EOF'
+chmod +x /tmp/out-of-bounds-read-cheri;
+/tmp/out-of-bounds-read-cheri_foo 'test' 2>&1;
+exit;
+EOF`
+
+      expect(firstCallArg).to.equal(expectation)
     })
 
     it('returns correct state along with exceptions if both binaries fail', () => {
