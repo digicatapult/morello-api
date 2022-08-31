@@ -8,18 +8,26 @@ import { RegisterRoutes } from './routes'
 import * as swaggerJson from './swagger.json'
 
 import { errorHandler } from './utils/errors'
+import  { validateExecutables } from './utils/executables'
 import logger from './utils/Logger'
 
-const app: Express = express()
-const port: Number = config.get('app.port')
+const start = async () => {
+  await validateExecutables()
 
-app.use(urlencoded({ extended: true }))
-app.use(json())
-app.use(cors())
-RegisterRoutes(app)
-app.use(['/openapi', '/docs', '/swagger'], swaggerUI.serve, swaggerUI.setup(swaggerJson))
-app.use(errorHandler)
+  const app: Express = express()
+  const port: Number = config.get('app.port')
 
-app.listen(port, () => {
-  logger.info('Server is running')
-})
+  app.use(urlencoded({ extended: true }))
+  app.use(json())
+  app.use(cors())
+  RegisterRoutes(app)
+  app.use(['/openapi', '/docs', '/swagger'], swaggerUI.serve, swaggerUI.setup(swaggerJson))
+  app.use(errorHandler)
+
+  app.listen(port, () => {
+    logger.info('Server is running')
+  })
+}
+start()
+
+

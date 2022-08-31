@@ -1,4 +1,6 @@
-const util = require('../../../utils/params')
+const paramUtil = require('../../../utils/params')
+const execUtil = require('../../../utils/executables')
+const { ScenarioNotFoundError } = require('../../../utils/errors')
 const { scenario } = require('../index')
 const { stub } = require('sinon')
 const { expect } = require('chai')
@@ -17,30 +19,37 @@ const execute = async () => {
   }
 }
 
-describe('/scenario/{example} endpoint', () => {
-  let res
-  let stubs = {}
-
-  beforeEach(async () => {
-    stubs.getRandomProcessName = stub(util, 'getRandomProcessName')
+const setupMocks = (stubs, options = {}) => {
+  before(async () => {
+    stubs.getRandomProcessName = stub(paramUtil, 'getRandomProcessName')
     stubs.getRandomProcessName.returns('out-of-bounds-read-cheri_foo')
+    stubs.checkExecutable = stub(execUtil, 'checkExecutable')
+    stubs.checkExecutable.resolves(options.checkExecutable === undefined ? true : options.checkExecutable)
     stubs.exec = stub(child, 'exec')
-    stubs.exec.onCall(0).yields(null, 'stdout - success')
+    stubs.exec.onCall(0).yields(options.exec.err, options.exec.stdout)
     stubs.exec.onCall(1)
-    res = await execute()
   })
 
-  afterEach(() => {
+  after(() => {
     stubs.getRandomProcessName.restore()
+    stubs.checkExecutable.restore()
     stubs.exec.restore()
   })
+}
 
-  describe('if executing binaries fails', () => {
-    beforeEach(async () => {
-      stubs.exec.restore()
-      stubs.exec = stub(child, 'exec')
-      stubs.exec.onCall(0).yields({ message: 'error' }, 'stdout - some error output')
-      stubs.exec.onCall(1)
+describe('/scenario/{example} endpoint', () => {
+  describe('happy path', () => {
+    let res
+    let stubs = {}
+
+    setupMocks(stubs, {
+      exec: {
+        err: null,
+        stdout: 'stdout - success',
+      },
+    })
+
+    before(async () => {
       res = await execute()
     })
 
@@ -55,6 +64,28 @@ EOF`
       expect(firstCallArg).to.equal(expectation)
     })
 
+    it('returns a formatted output', () => {
+      expect(res).to.include.all.keys(['output', 'status'])
+      expect(res).to.deep.equal({
+        status: 'success',
+        output: 'stdout - success',
+      })
+    })
+  })
+
+  describe('if executing binaries fails', () => {
+    let res
+    let stubs = {}
+    setupMocks(stubs, {
+      exec: {
+        err: { message: 'error' },
+        stdout: 'stdout - some error output',
+      },
+    })
+    before(async () => {
+      res = await execute()
+    })
+
     it('returns correct state along with exceptions if both binaries fail', () => {
       expect(res).to.deep.equal({
         status: 'error',
@@ -64,11 +95,22 @@ EOF`
     })
   })
 
-  it('returns a formatted output', () => {
-    expect(res).to.include.all.keys(['output', 'status'])
-    expect(res).to.deep.equal({
-      status: 'success',
-      output: 'stdout - success',
+  describe("if binary doesn't exist", () => {
+    let res
+    let stubs = {}
+    setupMocks(stubs, {
+      exec: {
+        err: null,
+        stdout: 'stdout - success',
+      },
+      checkExecutable: false,
+    })
+    before(async () => {
+      res = await execute()
+    })
+
+    it('returns', () => {
+      expect(res).to.be.an.instanceOf(ScenarioNotFoundError)
     })
   })
 })
