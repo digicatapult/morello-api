@@ -1,11 +1,11 @@
-const paramUtil = require('../../../utils/params')
-const execUtil = require('../../../utils/executables')
-const { ScenarioNotFoundError } = require('../../../utils/errors')
-const { scenario } = require('../index')
-const { stub } = require('sinon')
-const { expect } = require('chai')
-const child = require('child_process')
-const config = require('config')
+import * as paramUtil from '../../../utils/params'
+import * as execUtil from '../../../utils/executables'
+import { ScenarioNotFoundError } from '../../../utils/errors'
+import { scenario } from '../index'
+import { stub } from 'sinon'
+import { expect } from 'chai'
+import child from 'child_process'
+import config from 'config'
 
 const address = `${config.get('morello.username')}@${config.get('morello.host')}`
 const port = config.get('morello.port')
@@ -19,7 +19,7 @@ const execute = async () => {
   }
 }
 
-const setupMocks = (stubs, options = {}) => {
+const setupMocks = (stubs: any, options: any = {}) => {
   before(async () => {
     stubs.getRandomProcessName = stub(paramUtil, 'getRandomProcessName')
     stubs.getRandomProcessName.returns('out-of-bounds-read-cheri_foo')
@@ -39,8 +39,8 @@ const setupMocks = (stubs, options = {}) => {
 
 describe('/scenario/{example} endpoint', () => {
   describe('happy path', () => {
-    let res
-    let stubs = {}
+    let res: any
+    const stubs: any = {}
 
     setupMocks(stubs, {
       exec: {
@@ -74,8 +74,8 @@ EOF`
   })
 
   describe('if executing binaries fails', () => {
-    let res
-    let stubs = {}
+    let res: any
+    const stubs = {}
     setupMocks(stubs, {
       exec: {
         err: { message: 'error' },
@@ -96,8 +96,8 @@ EOF`
   })
 
   describe("if binary doesn't exist", () => {
-    let res
-    let stubs = {}
+    let res: any
+    const stubs: any = {}
     setupMocks(stubs, {
       exec: {
         err: null,

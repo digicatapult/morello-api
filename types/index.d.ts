@@ -1,1 +1,1 @@
-export type * from "./models/scenario";
+export type * from './models/scenario'
