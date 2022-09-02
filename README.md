@@ -2,7 +2,7 @@
 
 ## Description
 
-A `Node.js` API for executing binaries on Morello and `aarch64` architecture using a QEMU instance of the [Morello SDK](https://github.com/CTSRD-CHERI/cheribuild). The API copies binaries to QEMU, executes them and returns the output.
+A `Node.js` API for executing binaries on Morello and `aarch64` architecture. Requires an instance of Morello e.g. [Morello SDK](https://github.com/CTSRD-CHERI/cheribuild). The API copies binaries to the Morello instance, executes them and returns the output.
 
 ## Configuration
 
@@ -12,9 +12,9 @@ Use a `.env` at root of the repository to set values for the environment variabl
 | :--------------- | :------: | :---------: | :----------------------------------------------------------------------------------- |
 | PORT             |    N     |   `3000`    | The port for the API to listen on                                                    |
 | LOG_LEVEL        |    N     |   `debug`   | Logging level. Valid values are [`trace`, `debug`, `info`, `warn`, `error`, `fatal`] |
-| MORELLO_HOST     |    N     | `127.0.0.1` | Morello SDK QEMU host name                                                           |
-| MORELLO_PORT     |    N     |   `1022`    | Morello SDK QEMU port                                                                |
-| MORELLO_USERNAME |    N     |   `root`    | Morello SDK QEMU username                                                            |
+| MORELLO_HOST     |    N     | `127.0.0.1` | Morello host name                                                                    |
+| MORELLO_PORT     |    N     |   `1022`    | Morello port                                                                         |
+| MORELLO_USERNAME |    N     |   `root`    | Morello username                                                                     |
 
 [default.json](./config/default.json) contains default configuration values.
 
