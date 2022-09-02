@@ -7,7 +7,7 @@ const { expect } = require('chai')
 const child = require('child_process')
 const config = require('config')
 
-const address = `${config.get('morello.username')}@${config.get('morello.address')}`
+const address = `${config.get('morello.username')}@${config.get('morello.host')}`
 const port = config.get('morello.port')
 
 const execute = async () => {
