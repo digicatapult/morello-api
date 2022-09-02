@@ -15,7 +15,7 @@ export class scenario extends Controller implements IScenario {
 
   constructor() {
     super()
-    this.address = `${config.get('morello.username')}@${config.get('morello.address')}`
+    this.address = `${config.get('morello.username')}@${config.get('morello.host')}`
     this.port = config.get('morello.port')
     this.log = Logger.child({ controller: '/scenario', ...config.get('morello') })
   }
