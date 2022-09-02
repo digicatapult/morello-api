@@ -11,11 +11,8 @@ import { errorHandler } from './utils/errors'
 import  { validateExecutables } from './utils/executables'
 import logger from './utils/Logger'
 
-const start = async () => {
-  await validateExecutables()
-
+async function CreateHttpServer():Promise<Express> {
   const app: Express = express()
-  const port: Number = config.get('app.port')
 
   app.use(urlencoded({ extended: true }))
   app.use(json())
@@ -24,10 +21,21 @@ const start = async () => {
   app.use(['/openapi', '/docs', '/swagger'], swaggerUI.serve, swaggerUI.setup(swaggerJson))
   app.use(errorHandler)
 
+  return app 
+}
+
+const start = async () => {
+  await validateExecutables()
+
+  const app: Express = await CreateHttpServer()
+  const port: Number = config.get('app.port')
+
   app.listen(port, () => {
     logger.info('Server is running')
   })
 }
 start()
 
-
+module.exports = {
+  CreateHttpServer
+}
