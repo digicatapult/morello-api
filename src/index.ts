@@ -8,14 +8,14 @@ import { RegisterRoutes } from './routes'
 import * as swaggerJson from './swagger.json'
 
 import { errorHandler } from './utils/errors'
-import  { validateExecutables } from './utils/executables'
+import { validateExecutables } from './utils/executables'
 import logger from './utils/Logger'
 
 const start = async () => {
   await validateExecutables()
 
   const app: Express = express()
-  const port: Number = config.get('app.port')
+  const port: number = config.get('app.port')
 
   app.use(urlencoded({ extended: true }))
   app.use(json())
@@ -29,5 +29,3 @@ const start = async () => {
   })
 }
 start()
-
-
