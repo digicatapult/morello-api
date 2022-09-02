@@ -1,6 +1,6 @@
 # morello-api
 
-## Description
+## Description
 
 A `Node.js` API for executing binaries on Morello and `aarch64` architecture. Requires an instance of Morello e.g. [Morello SDK](https://github.com/CTSRD-CHERI/cheribuild). The API copies binaries to the Morello instance, executes them and returns the output.
 
@@ -18,7 +18,7 @@ Use a `.env` at root of the repository to set values for the environment variabl
 
 [default.json](./config/default.json) contains default configuration values.
 
-Alternatively create a `./config/local.json` file to overwrite the values of `default.json`.
+Alternatively create a `./config/local.json` file to override the values of `default.json`.
 
 ## Binaries
 
