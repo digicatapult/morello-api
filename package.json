@@ -5,7 +5,7 @@
   "main": "src/index.ts",
   "scripts": {
     "lint": "eslint ./src",
-    "build": "tsoa spec-and-routes && tsc && cp -rv bin/ build/bin",
+    "build": "tsoa spec-and-routes && tsc",
     "start": "node build/index.js",
     "depcheck": "depcheck",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q build/index.js | pino-colada\"",
