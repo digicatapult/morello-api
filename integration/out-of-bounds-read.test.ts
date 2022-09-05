@@ -2,7 +2,7 @@ import {describe , before, test } from 'mocha'
 import  { expect } from 'chai'
 import express from 'express'
 import { CreateHttpServer } from '../src/index'
-const { getOutOfBoundsReadAarch64, getOutOfBoundsReadCheri } = require('./helper/routeHelper.js')
+const { getOutOfBoundsReadAarch64, getOutOfBoundsReadCheri, getInvalidExecutable } = require('./helper/routeHelper.js')
 
 describe('Tests aarch64 version', () => {
   let app: express.Express
@@ -59,5 +59,20 @@ describe('Tests Cheri version', () => {
 
     expect(response.status).to.equal(200) //Should be 400?
     expect(response.body.status).to.contain('success') //Should be an error?
+  })
+})
+
+
+describe('Tests Invalid Executable version', () => {
+  let app: express.Express
+
+  before(async () => {
+    app = await CreateHttpServer()
+  })
+
+  test('Sad Path', async () => {
+    const response = await getInvalidExecutable(app, 'invalidpass')
+
+    expect(response.status).to.equal(422)
   })
 })
