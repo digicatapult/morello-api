@@ -2,7 +2,11 @@ import { describe, before, test } from 'mocha'
 import { expect } from 'chai'
 import express from 'express'
 import { CreateHttpServer } from '../src/index'
-import { getOutOfBoundsReadCheri, getOutOfBoundsReadAarch64, getInvalidExecutable } from '../integration/helper/routeHelper'
+import {
+  getOutOfBoundsReadCheri,
+  getOutOfBoundsReadAarch64,
+  getInvalidExecutable,
+} from '../integration/helper/routeHelper'
 
 describe('Tests aarch64 version', () => {
   let app: express.Express
