@@ -15,15 +15,15 @@ describe('Tests aarch64 version', () => {
     app = await CreateHttpServer()
   })
 
-  test('Happy Path', async () => {
+  test('Happy Path - aarch64', async () => {
     const response = await getOutOfBoundsReadAarch64(app, 'pass', -32, -28)
 
-    console.log(response.body)
+    console.log(response)
     expect(response.status).to.equal(200)
     expect(response.body.status).to.contain('success')
   })
 
-  test('Bad Parameters', async () => {
+  test('Bad Parameters - aarch64', async () => {
     const response = await getOutOfBoundsReadAarch64(app, 'badpass', NaN, 'ttttttt')
 
     console.log(response.body)
@@ -39,7 +39,7 @@ describe('Tests Cheri version', () => {
     app = await CreateHttpServer()
   })
 
-  test('Happy Path', async () => {
+  test('Happy Path - cheri', async () => {
     const response = await getOutOfBoundsReadCheri(app, 'cheripass', -32, -21)
 
     console.log(response.body)
@@ -47,7 +47,7 @@ describe('Tests Cheri version', () => {
     expect(response.body.status).to.contain('error')
   })
 
-  test('Bad Parameter', async () => {
+  test('Bad Parameters - cheri', async () => {
     const response = await getOutOfBoundsReadCheri(app, 'cheripass', 'cube', 'tarmac')
 
     console.log(response.body)
@@ -63,9 +63,10 @@ describe('Tests Invalid Executable version', () => {
     app = await CreateHttpServer()
   })
 
-  test('Sad Path', async () => {
+  test('Sad Path - non-existant test', async () => {
     const response = await getInvalidExecutable(app, 'invalidpass')
 
+    console.log(response.body)
     expect(response.status).to.equal(422)
   })
 })
