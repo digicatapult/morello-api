@@ -1,7 +1,7 @@
 import fs from 'fs/promises'
 
 import logger from './Logger'
-import { Executables } from '../../types'
+import { Executables } from '../types'
 
 const validExecutables: Executables[] = [
   'out-of-bounds-access-aarch64',

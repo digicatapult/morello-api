@@ -8,10 +8,10 @@ import { RegisterRoutes } from './routes'
 import * as swaggerJson from './swagger.json'
 
 import { errorHandler } from './utils/errors'
-import  { validateExecutables } from './utils/executables'
+import { validateExecutables } from './utils/executables'
 import logger from './utils/Logger'
 
-async function CreateHttpServer():Promise<Express> {
+export async function CreateHttpServer():Promise<Express> {
   const app: Express = express()
 
   app.use(urlencoded({ extended: true }))
@@ -36,6 +36,3 @@ const start = async () => {
 }
 start()
 
-module.exports = {
-  CreateHttpServer
-}

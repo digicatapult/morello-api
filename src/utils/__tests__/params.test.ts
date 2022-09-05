@@ -1,5 +1,5 @@
-const { expect } = require('chai')
-const { escapeParam, getValidHeredocEOF, getRandomProcessName } = require('../params')
+import { expect } from 'chai'
+import { escapeParam, getValidHeredocEOF, getRandomProcessName } from '../params'
 
 describe('getRandomProcessName', () => {
   it('should append a length 10 string of lowercase alpha chars', () => {

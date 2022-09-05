@@ -1,8 +1,8 @@
-const { expect } = require('chai')
-const Logger = require('../../Logger').default
+import { expect } from 'chai'
+import Logger from '../../Logger'
 
 describe('Logger', () => {
-  let log
+  let log: typeof Logger
 
   beforeEach(() => {
     log = Logger.child({ test: true })

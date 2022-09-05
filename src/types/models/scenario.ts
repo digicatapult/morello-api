@@ -1,5 +1,5 @@
 import { ExecException } from 'child_process'
-import Logger from '../../src/utils/Logger'
+import Logger from '../../utils/Logger'
 
 export type Executables =
   | 'out-of-bounds-access-aarch64'

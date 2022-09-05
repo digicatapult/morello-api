@@ -1,10 +1,11 @@
-const { describe, before, test } = require('mocha')
-const { expect } = require('chai')
-const { CreateHttpServer } = require('../src/index')
-const { getOutOfBoundsReadAarch64, getOutOfBoundsReadCheri } = require('./helper/routeHelper')
+import {describe , before, test } from 'mocha'
+import  { expect } from 'chai'
+import express from 'express'
+import { CreateHttpServer } from '../src/index'
+const { getOutOfBoundsReadAarch64, getOutOfBoundsReadCheri } = require('./helper/routeHelper.js')
 
 describe('Tests aarch64 version', () => {
-  let app
+  let app: express.Express
 
   before(async function () {
     app = await CreateHttpServer()
@@ -33,7 +34,7 @@ describe('Tests aarch64 version', () => {
 })
 
 describe('Tests Cheri version', () => {
-  let app
+  let app: express.Express
 
   before(async () => {
     app = await CreateHttpServer()
