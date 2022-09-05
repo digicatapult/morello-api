@@ -18,6 +18,7 @@ describe('Tests aarch64 version', () => {
   test('Happy Path', async () => {
     const response = await getOutOfBoundsReadAarch64(app, 'pass', -32, -28)
 
+    console.log(response.body)
     expect(response.status).to.equal(200)
     expect(response.body.status).to.contain('success')
   })
@@ -25,6 +26,7 @@ describe('Tests aarch64 version', () => {
   test('Bad Parameters', async () => {
     const response = await getOutOfBoundsReadAarch64(app, 'badpass', NaN, 'ttttttt')
 
+    console.log(response.body)
     expect(response.status).to.equal(200)
     expect(response.body.status).to.contain('success')
   })
@@ -40,6 +42,7 @@ describe('Tests Cheri version', () => {
   test('Happy Path', async () => {
     const response = await getOutOfBoundsReadCheri(app, 'cheripass', -32, -21)
 
+    console.log(response.body)
     expect(response.status).to.equal(200)
     expect(response.body.status).to.contain('error')
   })
@@ -47,6 +50,7 @@ describe('Tests Cheri version', () => {
   test('Bad Parameter', async () => {
     const response = await getOutOfBoundsReadCheri(app, 'cheripass', 'cube', 'tarmac')
 
+    console.log(response.body)
     expect(response.status).to.equal(200)
     expect(response.body.status).to.contain('success')
   })
