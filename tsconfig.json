@@ -19,5 +19,8 @@
       "pino": ["node_modules/pino"],
       "types": ["types"]
     }
-  }
+  },
+  "exclude": [
+    "**/*.test.ts"
+  ]
 }
