@@ -17,7 +17,7 @@ export async function getOutOfBoundsReadAarch64(app, password, firstOffset, seco
 }
 
 export async function getOutOfBoundsReadCheri(app, password, firstOffset, secondOffset) {
-  return request(app)
+  return request(app).g
     .get(`/scenario/out-of-bounds-readV2-cheri?params=${password}&params=${firstOffset}&params=${secondOffset}`)
     .set('Accept', 'application/json')
     .set('Content-Type', 'application/json')
