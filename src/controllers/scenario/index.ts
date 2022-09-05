@@ -1,7 +1,7 @@
 import { Controller, Get, Query, Path, Route, Response } from 'tsoa'
 import config from 'config'
 import { exec } from 'child_process'
-import { IScenario, HostResponse, Executables } from '../../../types'
+import { IScenario, HostResponse, Executables } from '../../types'
 import Logger from '../../utils/Logger'
 import * as paramUtil from '../../utils/params'
 import * as execUtil from '../../utils/executables'

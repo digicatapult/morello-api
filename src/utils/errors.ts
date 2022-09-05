@@ -2,7 +2,7 @@ import { Response as ExResponse, Request as ExRequest, NextFunction } from 'expr
 import { ValidateError } from 'tsoa'
 
 import logger from './Logger'
-import { Executables } from '../../types'
+import { Executables } from '../types'
 
 export interface ValidateErrorJSON {
   message: 'Validation failed'
