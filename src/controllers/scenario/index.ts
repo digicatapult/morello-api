@@ -33,7 +33,7 @@ export class scenario extends Controller implements IScenario {
     const ssh = `ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -q -p ${this.port} ${
       this.address
     } -t << '${eof}'
-chmod +x /tmp/${bin};
+chmod +x /tmp/${destBin};
 /tmp/${destBin} ${params.join(' ')} 2>&1;
 exit;
 ${eof}`
