@@ -56,7 +56,7 @@ describe('/scenario/{example} endpoint', () => {
     it('calls exec correctly', () => {
       const firstCallArg = stubs.exec.firstCall.args[0]
       const expectation = `scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -q -P ${port} bin/out-of-bounds-read-cheri ${address}:/tmp/out-of-bounds-read-cheri_foo; ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -q -p ${port} ${address} -t << 'EOF'
-chmod +x /tmp/out-of-bounds-read-cheri;
+chmod +x /tmp/out-of-bounds-read-cheri_foo;
 /tmp/out-of-bounds-read-cheri_foo 'test' 2>&1;
 exit;
 EOF`
