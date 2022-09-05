@@ -1,4 +1,4 @@
-import request from 'supertest'
+import * as request from 'supertest'
 
 export async function getOutOfBoundsReadAarch64(app, password, firstOffset, secondOffset) {
   return request(app)
@@ -17,7 +17,7 @@ export async function getOutOfBoundsReadAarch64(app, password, firstOffset, seco
 }
 
 export async function getOutOfBoundsReadCheri(app, password, firstOffset, secondOffset) {
-  return request(app).g
+  return request(app)
     .get(`/scenario/out-of-bounds-readV2-cheri?params=${password}&params=${firstOffset}&params=${secondOffset}`)
     .set('Accept', 'application/json')
     .set('Content-Type', 'application/json')
@@ -46,4 +46,10 @@ export async function getInvalidExecutable(app, password) {
       console.error(`Out of bounds read (aaarch64) ${err}`)
       return err
     })
+}
+
+module.exports = {
+  getOutOfBoundsReadAarch64,
+  getOutOfBoundsReadCheri,
+  getInvalidExecutable,
 }
