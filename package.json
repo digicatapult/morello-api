@@ -10,7 +10,7 @@
     "depcheck": "depcheck",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q build/index.js | pino-colada\"",
     "test:unit": "NODE_ENV=test ./node_modules/.bin/mocha -r ts-node/register ./src/**/*.test.js",
-    "test:integration": "./node_modules/.bin/mocha --timeout 10000 -r ts-node/register ./integration/*.test.js"
+    "test:integration": "./node_modules/.bin/mocha --timeout 15000 -r ts-node/register ./integration/*.test.js"
   },
   "repository": {
     "type": "git",
