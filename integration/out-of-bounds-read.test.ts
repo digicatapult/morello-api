@@ -1,8 +1,8 @@
-import {describe , before, test } from 'mocha'
-import  { expect } from 'chai'
+import { describe, before, test } from 'mocha'
+import { expect } from 'chai'
 import express from 'express'
 import { CreateHttpServer } from '../src/index'
-const { getOutOfBoundsReadAarch64, getOutOfBoundsReadCheri, getInvalidExecutable } = require('./helper/routeHelper.js')
+import { getOutOfBoundsReadAarch64, getOutOfBoundsReadCheri, getInvalidExecutable } from './helper/routeHelper.js'
 
 describe('Tests aarch64 version', () => {
   let app: express.Express
@@ -21,15 +21,15 @@ describe('Tests aarch64 version', () => {
   test('Missing Parameters', async () => {
     const response = await getOutOfBoundsReadAarch64(app, 'pass_1', -32)
 
-    expect(response.status).to.equal(200) // Should be 400?
-    expect(response.body.status).to.contain('success') //should be 'error'
+    expect(response.status).to.equal(200)
+    expect(response.body.status).to.contain('success')
   })
 
   test('Bad Parameters', async () => {
     const response = await getOutOfBoundsReadAarch64(app, 'badpass', NaN, 'ttttttt')
 
-    expect(response.status).to.equal(200) // Should be 400?
-    expect(response.body.status).to.contain('success') // Should be an error?
+    expect(response.status).to.equal(200)
+    expect(response.body.status).to.contain('success')
   })
 })
 
@@ -50,18 +50,17 @@ describe('Tests Cheri version', () => {
   test('Missing Parameter', async () => {
     const response = await getOutOfBoundsReadCheri(app, 'cheripass', -32)
 
-    expect(response.status).to.equal(200) //Should be 400?
+    expect(response.status).to.equal(200)
     expect(response.body.status).to.contain('error')
   })
 
   test('Bad Parameter', async () => {
     const response = await getOutOfBoundsReadCheri(app, 'cheripass', 'cube', 'tarmac')
 
-    expect(response.status).to.equal(200) //Should be 400?
-    expect(response.body.status).to.contain('success') //Should be an error?
+    expect(response.status).to.equal(200)
+    expect(response.body.status).to.contain('success')
   })
 })
-
 
 describe('Tests Invalid Executable version', () => {
   let app: express.Express

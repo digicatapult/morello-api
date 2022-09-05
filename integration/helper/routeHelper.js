@@ -1,6 +1,6 @@
-const request = require('supertest')
+import request from 'supertest'
 
-async function getOutOfBoundsReadAarch64(app, password, firstOffset, secondOffset) {
+export async function getOutOfBoundsReadAarch64(app, password, firstOffset, secondOffset) {
   return request(app)
     .get(`/scenario/out-of-bounds-readV2-aarch64?params=${password}&params=${firstOffset}&params=${secondOffset}`)
     .set('Accept', 'application/json')
@@ -16,7 +16,7 @@ async function getOutOfBoundsReadAarch64(app, password, firstOffset, secondOffse
     })
 }
 
-async function getOutOfBoundsReadCheri(app, password, firstOffset, secondOffset) {
+export async function getOutOfBoundsReadCheri(app, password, firstOffset, secondOffset) {
   return request(app)
     .get(`/scenario/out-of-bounds-readV2-cheri?params=${password}&params=${firstOffset}&params=${secondOffset}`)
     .set('Accept', 'application/json')
@@ -32,7 +32,7 @@ async function getOutOfBoundsReadCheri(app, password, firstOffset, secondOffset)
     })
 }
 
-async function getInvalidExecutable(app, password, firstOffset, secondOffset) {
+export async function getInvalidExecutable(app, password) {
   return request(app)
     .get(`/scenario/out-of-bounds-readV5-aarch64?params=${password}`)
     .set('Accept', 'application/json')
@@ -46,10 +46,4 @@ async function getInvalidExecutable(app, password, firstOffset, secondOffset) {
       console.error(`Out of bounds read (aaarch64) ${err}`)
       return err
     })
-}
-
-module.exports = {
-  getOutOfBoundsReadAarch64,
-  getOutOfBoundsReadCheri,
-  getInvalidExecutable,
 }
