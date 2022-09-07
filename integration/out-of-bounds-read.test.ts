@@ -19,6 +19,7 @@ describe('Tests aarch64 version', () => {
     const response = await getOutOfBoundsReadAarch64(app, 'pass', -32, -28)
 
     expect(response.status).to.equal(200)
+    expect(response.body.output).to.contain('Storing Secret...\nThe data between indices -32 and -28 is: pass\n')
     expect(response.body.status).to.contain('success')
   })
 
