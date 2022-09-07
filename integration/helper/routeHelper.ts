@@ -3,9 +3,9 @@ import express from 'express'
 
 export async function getOutOfBoundsReadAarch64(
   app: express.Express,
-  password: any,
-  firstOffset: any,
-  secondOffset: any
+  password: string | number,
+  firstOffset: string | number,
+  secondOffset: string | number
 ) {
   return request(app)
     .get(`/scenario/out-of-bounds-readV2-aarch64?params=${password}&params=${firstOffset}&params=${secondOffset}`)
@@ -24,9 +24,9 @@ export async function getOutOfBoundsReadAarch64(
 
 export async function getOutOfBoundsReadCheri(
   app: express.Express,
-  password: any,
-  firstOffset: any,
-  secondOffset: any
+  password: string | number,
+  firstOffset: string | number,
+  secondOffset: string | number
 ) {
   return request(app)
     .get(`/scenario/out-of-bounds-readV2-cheri?params=${password}&params=${firstOffset}&params=${secondOffset}`)
@@ -43,7 +43,7 @@ export async function getOutOfBoundsReadCheri(
     })
 }
 
-export async function getInvalidExecutable(app: express.Express, password: any) {
+export async function getInvalidExecutable(app: express.Express, password: string | number) {
   return request(app)
     .get(`/scenario/out-of-bounds-readV5-aarch64?params=${password}`)
     .set('Accept', 'application/json')
