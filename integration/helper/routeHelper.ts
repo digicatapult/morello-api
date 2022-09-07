@@ -1,6 +1,7 @@
 import request from 'supertest'
+import express from 'express'
 
-export async function getOutOfBoundsReadAarch64(app: any, password: any, firstOffset: any, secondOffset: any) {
+export async function getOutOfBoundsReadAarch64(app: express.Express, password: any, firstOffset: any, secondOffset: any) {
   return request(app)
     .get(`/scenario/out-of-bounds-readV2-aarch64?params=${password}&params=${firstOffset}&params=${secondOffset}`)
     .set('Accept', 'application/json')
@@ -16,7 +17,7 @@ export async function getOutOfBoundsReadAarch64(app: any, password: any, firstOf
     })
 }
 
-export async function getOutOfBoundsReadCheri(app: any, password: any, firstOffset: any, secondOffset: any) {
+export async function getOutOfBoundsReadCheri(app: express.Express, password: any, firstOffset: any, secondOffset: any) {
   return request(app)
     .get(`/scenario/out-of-bounds-readV2-cheri?params=${password}&params=${firstOffset}&params=${secondOffset}`)
     .set('Accept', 'application/json')
@@ -32,7 +33,7 @@ export async function getOutOfBoundsReadCheri(app: any, password: any, firstOffs
     })
 }
 
-export async function getInvalidExecutable(app: any, password: any) {
+export async function getInvalidExecutable(app: express.Express, password: any) {
   return request(app)
     .get(`/scenario/out-of-bounds-readV5-aarch64?params=${password}`)
     .set('Accept', 'application/json')
