@@ -105,7 +105,7 @@ jobs:
       - name: Sleep
         uses: kibertoad/wait-action@1.0.1
         with:
-          time: '30s'
+          time: '60s'
       - name: Run unit tests
         run: npm run test:unit
       - name: Run integration tests
