@@ -12,10 +12,10 @@ export async function getOutOfBoundsReadAarch64(
     .set('Accept', 'application/json')
     .set('Content-Type', 'application/json')
     .send()
-    .then((response: any) => {
+    .then((response) => {
       return response
     })
-    .catch((err: any) => {
+    .catch((err) => {
       // eslint-disable-next-line no-console
       console.error(`Out of bounds read (aaarch64) ${err}`)
       return err
@@ -33,10 +33,10 @@ export async function getOutOfBoundsReadCheri(
     .set('Accept', 'application/json')
     .set('Content-Type', 'application/json')
     .send()
-    .then((response: any) => {
+    .then((response) => {
       return response
     })
-    .catch((err: any) => {
+    .catch((err) => {
       // eslint-disable-next-line no-console
       console.error(`Out of bounds read (aaarch64) ${err}`)
       return err
@@ -49,10 +49,10 @@ export async function getInvalidExecutable(app: express.Express, password: any) 
     .set('Accept', 'application/json')
     .set('Content-Type', 'application/json')
     .send()
-    .then((response: any) => {
+    .then((response) => {
       return response
     })
-    .catch((err: any) => {
+    .catch((err) => {
       // eslint-disable-next-line no-console
       console.error(`Out of bounds read (aaarch64) ${err}`)
       return err
