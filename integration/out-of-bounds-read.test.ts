@@ -17,7 +17,9 @@ describe('Tests aarch64 version', () => {
 
   test('Happy Path - aarch64', async () => {
     const response = await getOutOfBoundsReadAarch64(app, 'pass', -32, -28)
-
+    console.log('----------------------------------------------')
+    console.log(response)
+    console.log('----------------------------------------------')
     console.log(response.body)
     expect(response.status).to.equal(200)
     expect(response.body.status).to.contain('success')
