@@ -57,6 +57,13 @@ describe('Tests Cheri version', () => {
     expect(response.status).to.equal(200)
     expect(response.body.status).to.contain('success')
   })
+
+  test('Missing Parameters - cheri', async () => {
+    const response = await getOutOfBoundsReadCheri(app, 'cheripass', '', '')
+
+    expect(response.status).to.equal(200)
+    expect(response.body.status).to.contain('success')
+  })
 })
 
 describe('Tests Invalid Executable version', () => {
