@@ -1,12 +1,12 @@
 {
   "name": "@digicatapult/morello-api",
-  "version": "0.6.5",
+  "version": "0.6.6",
   "description": "An interface for executing binaries on it's self and morello host.",
   "main": "src/index.ts",
   "scripts": {
     "lint": "eslint .",
     "build:tsoa": "tsoa spec-and-routes",
-    "build": "npm run build:tsoa && tsc",
+    "build": "tsoa spec-and-routes && tsc",
     "start": "node build/index.js",
     "depcheck": "depcheck",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q build/index.js | pino-colada\"",
