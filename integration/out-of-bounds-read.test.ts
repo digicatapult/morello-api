@@ -23,6 +23,18 @@ describe('Tests aarch64 version', () => {
     expect(response.body.status).to.contain('success')
   })
 
+  test('Handles Exception - aarch64', async () => {
+    const response = await getOutOfBoundsReadAarch64(app, 'pass', 'abc', -28)
+
+    expect(response.status).to.equal(200)
+    expect(response.body.output).to.contain('Storing Secret...\nEnd index must be after start index')
+    expect(response.body.exception).to.deep.contain({
+      killed: false,
+      code: 1,
+      signal: null,
+    })
+  })
+
   test('Bad Parameters - aarch64', async () => {
     const response = await getOutOfBoundsReadAarch64(app, 'badpass', NaN, 'ttttttt')
 
@@ -50,6 +62,23 @@ describe('Tests Cheri version', () => {
 
     expect(response.status).to.equal(200)
     expect(response.body.status).to.contain('error')
+    expect(response.body).to.have.property('exception').that.deep.contain({
+      killed: false,
+      code: 162,
+    })
+    expect(response.body.output).to.contain('In-address space security exception')
+  })
+
+  test('Handles Exception - cheri', async () => {
+    const response = await getOutOfBoundsReadCheri(app, 'pass', 'abc', -28)
+
+    expect(response.status).to.equal(200)
+    expect(response.body.output).to.contain('Storing Secret...\nEnd index must be after start index')
+    expect(response.body.exception).to.deep.contain({
+      killed: false,
+      code: 1,
+      signal: null,
+    })
   })
 
   test('Bad Parameters - cheri', async () => {

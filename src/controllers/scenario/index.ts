@@ -42,14 +42,14 @@ ${eof}`
     this.log.debug({ msg: `executing ${bin} on ${this.address} host`, scp, ssh })
 
     return new Promise((resolve) => {
-      exec(`${scp}; ${ssh}`, (err, stdout) => {
+      exec(`${scp}; ${ssh}`, (stderr, stdout, err) => {
         exec(rm) // fire and forget, remove binary file
         return resolve(
-          err
+          stderr
             ? {
                 status: 'error',
-                output: stdout,
-                exception: err,
+                output: err || stdout,
+                exception: stderr,
               }
             : {
                 status: 'success',
