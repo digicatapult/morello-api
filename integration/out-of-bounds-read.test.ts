@@ -66,7 +66,7 @@ describe('Tests Cheri version', () => {
       killed: false,
       code: 162,
     })
-    expect(response.body.output).to.contain('In-address space security exception (core dumped)')
+    expect(response.body.output).to.contain('In-address space security exception')
   })
 
   test('Handles Exception - cheri', async () => {
