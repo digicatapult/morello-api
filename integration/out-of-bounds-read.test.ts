@@ -62,6 +62,10 @@ describe('Tests Cheri version', () => {
 
     expect(response.status).to.equal(200)
     expect(response.body.status).to.contain('error')
+    expect(response.body).to.have.property('exception').that.deep.contain({
+      killed: false,
+      code: 162,
+    })
     expect(response.body.output).to.contain('In-address space security exception (core dumped)')
   })
 
