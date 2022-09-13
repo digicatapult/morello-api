@@ -90,7 +90,7 @@ EOF`
       expect(res).to.deep.equal({
         status: 'error',
         output: 'stdout - some error output',
-        exception: { message: 'error' }
+        exception: { message: 'error' },
       })
     })
   })
