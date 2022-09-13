@@ -20,8 +20,8 @@ export type HostResponseSuccess = {
 
 export type HostResponseError = {
   status: 'error'
-  output: string
-  exception: ExecException
+  output: string 
+  exception: ExecException | string
 }
 
 export type HostResponse = HostResponseSuccess | HostResponseError
