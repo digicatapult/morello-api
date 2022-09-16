@@ -15,6 +15,7 @@ Use a `.env` at root of the repository to set values for the environment variabl
 | MORELLO_HOST     |    N     | `127.0.0.1` | Morello host name                                                                    |
 | MORELLO_PORT     |    N     |   `1022`    | Morello port                                                                         |
 | MORELLO_USERNAME |    N     |   `root`    | Morello username                                                                     |
+| BINARY_DIR       |    N     |    `bin`    | Directory in which to find scenario binaries                                         |
 
 [default.json](./config/default.json) contains default configuration values.
 
