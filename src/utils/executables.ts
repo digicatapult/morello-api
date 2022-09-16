@@ -16,19 +16,19 @@ const validExecutables: Executables[] = [
   'use-after-free-cheri',
 ]
 
-export const validateExecutables = async () => {
+export const validateExecutables = async (binaryDir: string) => {
   for (const executableName of validExecutables) {
     try {
-      await fs.stat(`bin/${executableName}`)
+      await fs.stat(`${binaryDir}/${executableName}`)
     } catch (err) {
       logger.warn(`Executable ${executableName} could not be found`)
     }
   }
 }
 
-export const checkExecutable = async (executableName: string): Promise<boolean> => {
+export const checkExecutable = async (binaryDir: string, executableName: string): Promise<boolean> => {
   try {
-    await fs.stat(`bin/${executableName}`)
+    await fs.stat(`${binaryDir}/${executableName}`)
     return true
   } catch (err) {
     return false

@@ -8,6 +8,7 @@
     "port": "MORELLO_PORT"
   },
   "app": {
-    "port": "PORT"
+    "port": "PORT",
+    "binaryDir": "BINARY_DIR"
   }
 }
