@@ -11,17 +11,19 @@ import { ValidateErrorJSON, ScenarioNotFoundJSON, ScenarioNotFoundError } from '
 export class scenario extends Controller implements IScenario {
   address: string
   port: number
+  binaryDir: string
   log: typeof Logger
 
   constructor() {
     super()
     this.address = `${config.get('morello.username')}@${config.get('morello.host')}`
     this.port = config.get('morello.port')
+    this.binaryDir = config.get('app.binaryDir')
     this.log = Logger.child({ controller: '/scenario', ...config.get('morello') })
   }
 
   async execute(bin: Executables, params: string[] = []): Promise<HostResponse> {
-    if (!(await execUtil.checkExecutable(bin))) {
+    if (!(await execUtil.checkExecutable(this.binaryDir, bin))) {
       throw new ScenarioNotFoundError(bin)
     }
 
@@ -29,7 +31,7 @@ export class scenario extends Controller implements IScenario {
     const destBin = paramUtil.getRandomProcessName(bin)
     const eof = paramUtil.getValidHeredocEOF(bin, params)
 
-    const scp = `scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -q -P ${this.port} bin/${bin} ${this.address}:/tmp/${destBin}`
+    const scp = `scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -q -P ${this.port} ${this.binaryDir}/${bin} ${this.address}:/tmp/${destBin}`
     const ssh = `ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -q -p ${this.port} ${
       this.address
     } -t << '${eof}'
