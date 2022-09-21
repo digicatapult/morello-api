@@ -23,20 +23,30 @@ Alternatively create a `./config/local.json` file to override the values of `def
 
 ## Binaries
 
-Binaries to be executed by the API are located in the [bin](./bin/) directory, however the API is primarily designed to be used as a docker image. [Dockerfile](./Dockerfile) replaces the contents of `bin` with the latest binaries from [`morello-examples`](https://github.com/digicatapult/morello-examples), a separately maintained list of examples designed to illustrate how certain common software defects can be protected against by running on a Cheri-enabled platform.
+Binaries to be executed by the API should by default be located in the [bin](./bin/) directory. If using the Docker image built from this repository the latest binaries are included at image build time from the latest release of [https://github.com/digicatapult/morello-examples](https://github.com/digicatapult/morello-examples). When developing locally you can either download the latest binaries from that repository or there are a couple of helper npm scripts to help you manage them. To update to the latest release you can run:
 
-Some simple binaries are included in this repository for local testing. Binaries can also be added manually to the `bin` directory. Each binary will need its filename added to the [`Executables`](./types/models/scenario.ts) type to appear as an option on the API route.
+```sh
+npm run examples:update
+```
+
+And to perform a purge of currently installed binaries do:
+
+```sh
+npm run examples:clean
+```
 
 ## Getting started
 
 ```sh
- # start dependencies
+# start dependencies
 docker compose up -d
- # install packages
+# install packages
 npm i
- # generate swagger and route files for Open API
+# download latest binaries
+npm run examples:update
+# generate swagger and route files for Open API
 npm run build
- # start service in dev mode. In order to start in full - npm start"
+# start service in dev mode. In order to start in full - npm start"
 npm run dev
 ```
 
