@@ -1,12 +1,14 @@
 {
   "name": "@digicatapult/morello-api",
-  "version": "0.6.8",
+  "version": "0.6.9",
   "description": "An interface for executing binaries on it's self and morello host.",
   "main": "src/index.ts",
   "scripts": {
     "lint": "eslint .",
     "build:tsoa": "tsoa spec-and-routes",
     "build": "tsoa spec-and-routes && tsc",
+    "examples:update": "cd bin && wget https://github.com/digicatapult/morello-examples/releases/download/latest/morello-examples.tar.gz && tar -xvf morello-examples.tar.gz && rm morello-examples.tar.gz",
+    "examples:clean": "rm -rf bin/* bin/.version",
     "start": "node build/index.js",
     "depcheck": "depcheck",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q build/index.js | pino-colada\"",
